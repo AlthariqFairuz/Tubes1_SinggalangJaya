@@ -1,34 +1,31 @@
-# Makefile for C++ project with source files in src/ directory
+# Define compiler and flags (adjust as needed)
+CXX = g++
+CXXFLAGS = -Wall -std=c++17
 
-# Compiler and flags
-CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -pedantic
+# Define object file directory (optional, avoids conflicts)
+OBJDIR = obj
 
-# Directories
-SRCDIR := src
-BUILDDIR := build
-TARGETDIR := bin
+# Pattern for finding all source files
+CPP_SOURCES = $(shell find src -name "*.cpp")
 
-# Get all .cpp files recursively
-SRCS := $(shell find $(SRCDIR) -name '*.cpp')
+# Define object files based on source files
+OBJECTS = $(CPP_SOURCES:src/%.cpp=$(OBJDIR)/%.o)
 
-# Generate corresponding object file paths
-OBJS := $(SRCS:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
+# Executable name (change as needed)
+EXECUTABLE = main
 
-# Main target
-all: $(OBJS)
-	@mkdir -p $(TARGETDIR)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGETDIR)/my_program
+# Main target (executable)
+all: $(EXECUTABLE)
 
-# Compilation rule for object files
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
-	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+# Link object files into executable
+$(EXECUTABLE): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJECTS)
 
-# Clean rule
+# Compile individual source files to object files
+$(OBJDIR)/%.o: src/%.cpp
+	@mkdir -p $(@D)  # Create object directory if it doesn't exist
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
+
+# Clean target to remove all object files
 clean:
-	rm -rf $(BUILDDIR) $(TARGETDIR)
-
-
-# Phony targets
-.PHONY: all clean
+	rm -rf $(OBJECTS) $(OBJDIR)

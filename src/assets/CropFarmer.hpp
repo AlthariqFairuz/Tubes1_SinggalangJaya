@@ -4,7 +4,8 @@
 #include "Person.hpp"
 #include "owner/StorageOwner.hpp"
 #include "owner/CroplandOwner.hpp"
-#include "../interfaces/Taxable.hpp"
+#include "../abstracts/Taxable.hpp"
+#include "../abstracts/GameLogic.hpp"
 
 #include <vector>
 #include <string>
@@ -12,7 +13,8 @@
 using std::vector;
 using std::string;
 
-class CropFarmer : public Person, public StorageOwner, public CroplandOwner, public Taxable {
+class CropFarmer : public Person, public StorageOwner, public CroplandOwner, public Taxable, public GameLogic {
+    
 };
 
 

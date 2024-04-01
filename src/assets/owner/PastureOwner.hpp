@@ -10,6 +10,7 @@ using std::string;
 class PastureOwner {
     public:
     vector<vector<string>> land;
+    
 };
 
 #endif

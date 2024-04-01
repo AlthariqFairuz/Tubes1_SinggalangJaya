@@ -3,22 +3,30 @@
 
 #include "Plant.hpp"
 #include <string>
+#include <map>
 #include <vector>
 
 using std::string;
+using std::map;
 using std::vector;
 
+class RecipeMaterial {
+    public:
+    string plant_code;
+    int quantity;
+    RecipeMaterial(string plant_code, int quantity) :
+    plant_code(plant_code), quantity(quantity) {}
+};
+
 class Recipe {
+    public:
     int id;
     string code;
     string name;
     int price;
     vector<RecipeMaterial> materials;
-};
 
-class RecipeMaterial {
-    Plant material;
-    int quantity;
+    static map<string, Recipe> recipe_config;
 };
 
 #endif

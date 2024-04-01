@@ -3,8 +3,9 @@
 
 #include "Person.hpp"
 #include "owner/StorageOwner.hpp"
+#include "../abstracts/GameLogic.hpp"
 
-class Mayor : public Person, public StorageOwner {
+class Mayor : public Person, public StorageOwner, public GameLogic {
 
 };
 
