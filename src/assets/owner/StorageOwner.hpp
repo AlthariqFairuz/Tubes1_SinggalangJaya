@@ -3,12 +3,16 @@
 
 #include <vector>
 #include <string>
+#include "Matrix.hpp"
 
 using std::vector;
 using std::string;
 
 class StorageOwner {
-    vector<vector<string>> storage;
+    public:
+    Matrix<string> storage;
+
+    StorageOwner(int rows, int cols) : storage(rows, cols) {}
 };
 
 #endif

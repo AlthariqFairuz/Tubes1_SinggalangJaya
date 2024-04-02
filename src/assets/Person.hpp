@@ -11,6 +11,9 @@ class Person {
     int gold;
     int weight;
 
+    Person(string username, int gold, int weight) :
+    username(username), gold(gold), weight(weight) {}
+
 };
 
 #endif

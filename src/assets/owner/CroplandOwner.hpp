@@ -3,13 +3,16 @@
 
 #include <vector>
 #include <string>
+#include "Matrix.hpp"
 
 using std::vector;
 using std::string;
 
 class CroplandOwner {
     public:
-    vector<vector<string>> land;
+    Matrix<string> land;
+
+    CroplandOwner(int rows, int cols) : land(rows, cols) {}
 };
 
 #endif
