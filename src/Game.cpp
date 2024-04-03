@@ -29,6 +29,9 @@ int Game::storage_row, Game::storage_col;
 int Game::cropland_row, Game::cropland_col;
 int Game::pasture_row, Game::pasture_col;
 
+set<GameLogic *, CompareUsername>::iterator Game::current_player;
+set<GameLogic*, CompareUsername> Game::players;
+
 void Game::muat_konfigurasi() {
     // konfigurasi/plant.txt
     ifstream plant_file("konfigurasi/plant.txt");
@@ -140,6 +143,6 @@ void Game::next() {
 }
 
 void Game::simpan() {
-
+    
 }
 

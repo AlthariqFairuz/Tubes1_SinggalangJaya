@@ -3,11 +3,17 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
-using std::cout;
+using std::string;
+using std::cout, std::endl;
 using std::vector;
 
-template <typename T>
+string self_format_int(int num, int desired_length);
+
+template<typename T>
 class Matrix {
     public:
     Matrix(int rows, int cols) : rows(rows), cols(cols) {
@@ -42,11 +48,30 @@ class Matrix {
     }
 
     void print() {
+        cout << "   ";
+        for (int i = 0; i < cols; ++i) {
+            cout << "   " << (char)('A' + i) << "  ";
+        }
+        cout << '\n';
+        cout << "   ";
+        for (int i = 0; i < cols; ++i) {
+            cout << "+-----";
+        }
+        cout << "+\n";
         for (int i = 0; i < rows; ++i) {
+            cout << self_format_int(i, 2) << " ";
             for (int j = 0; j < cols; ++j) {
-                cout << data[i][j] << ' ';
+                auto entry = data[i][j];
+                string entry_string;
+                if (entry == T()) entry_string = "   ";
+                else entry_string = string(entry);
+                cout << "| " << entry_string << " ";
             }
-            cout << '\n';
+            cout << "|\n   ";
+            for (int i = 0; i < cols; ++i) {
+                cout << "+-----";
+            }
+            cout << "+\n";
         }
         cout.flush();
     }
@@ -54,7 +79,8 @@ class Matrix {
     private:
     int rows;
     int cols;
-    vector<vector<T>> data;
+    vector<vector<string>> data;
 };
+
 
 #endif

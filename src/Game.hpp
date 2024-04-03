@@ -9,10 +9,10 @@ using std::set;
 class Game {
     public:
     static void muat_konfigurasi();
-    void muat();
-    void next();
-    void simpan();
-    void tambah_pemain();
+    static void muat();
+    static void next();
+    static void simpan();
+    static void tambah_pemain();
     
     // row = Vertical, col = Horizontal
     static int winning_money;
@@ -21,10 +21,10 @@ class Game {
     static int cropland_row, cropland_col;
     static int pasture_row, pasture_col;
     
-    std::set<GameLogic *, CompareUsername>::iterator current_player;
+    static set<GameLogic *, CompareUsername>::iterator current_player;
     
     private:
-    set<GameLogic*, CompareUsername> players;
+    static set<GameLogic*, CompareUsername> players;
 };
 
 #endif

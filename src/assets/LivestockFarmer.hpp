@@ -19,9 +19,12 @@ class LivestockFarmer : public Person, public StorageOwner, public PastureOwner,
     LivestockFarmer(string username, int gold, int weight) :
     Person(username, gold, weight), StorageOwner(Game::storage_row, Game::storage_col), PastureOwner(Game::pasture_row, Game::pasture_col) {}
 
-    string get_username() const {
-        return username;
-    }
+    string get_username() const;
+    void cetak_penyimpanan() override;
+    void cetak_peternakan() override;
+    void ternak() override;
+    
+
     int calculate_tax() override;
 };
 
