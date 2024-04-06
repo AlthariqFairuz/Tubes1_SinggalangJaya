@@ -11,7 +11,13 @@ using std::string;
 using std::cout, std::endl;
 using std::vector;
 
-string self_format_int(int num, int desired_length);
+string format_int(int num, int desired_length);
+
+class Coordinate {
+    public:
+    int row, col;
+    Coordinate(int row, int col) : row(row), col(col) {}
+};
 
 template<typename T>
 class Matrix {
@@ -23,20 +29,12 @@ class Matrix {
         }
     }
 
-    T &operator()(int row, int col) {
+    virtual T &operator()(int row, int col) {
         return data[row][col];
     }
 
-    const T &operator()(int row, int col) const {
+    virtual const T &operator()(int row, int col) const {
         return data[row][col];
-    }
-
-    T &operator[](const std::pair<int, int> &index) {
-        return data[index.first][index.second];
-    }
-
-    const T &operator[](const std::pair<int, int> &index) const {
-        return data[index.first][index.second];
     }
 
     int get_rows() const { 
@@ -48,38 +46,25 @@ class Matrix {
     }
 
     void print() {
-        cout << "   ";
-        for (int i = 0; i < cols; ++i) {
-            cout << "   " << (char)('A' + i) << "  ";
-        }
-        cout << '\n';
-        cout << "   ";
-        for (int i = 0; i < cols; ++i) {
-            cout << "+-----";
-        }
-        cout << "+\n";
         for (int i = 0; i < rows; ++i) {
-            cout << self_format_int(i, 2) << " ";
             for (int j = 0; j < cols; ++j) {
-                auto entry = data[i][j];
-                string entry_string;
-                if (entry == T()) entry_string = "   ";
-                else entry_string = string(entry);
-                cout << "| " << entry_string << " ";
+                cout << data[i][j] << ' ';
             }
-            cout << "|\n   ";
-            for (int i = 0; i < cols; ++i) {
-                cout << "+-----";
-            }
-            cout << "+\n";
+            cout << '\n';
         }
         cout.flush();
     }
 
-    private:
+    static Coordinate location(string loc) {
+        int row = loc[0] - 'A';
+        int col = (loc[1] - '0') * 10 + (loc[2] - '0');
+        return Coordinate(row, col);
+    }
+
+    protected:
     int rows;
     int cols;
-    vector<vector<string>> data;
+    vector<vector<T>> data;
 };
 
 

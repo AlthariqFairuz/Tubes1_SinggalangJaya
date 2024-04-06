@@ -27,6 +27,7 @@ class Recipe {
     vector<RecipeMaterial> materials;
 
     static map<string, Recipe> recipe_config;
+    static map<string, string> name_to_code;
 };
 
 #endif

@@ -21,3 +21,4 @@ void LivestockFarmer::ternak() {
     cetak_penyimpanan();
     
 }
+

@@ -1,6 +1,7 @@
 #ifndef ASSETS_PLANT_HPP
 #define ASSETS_PLANT_HPP
 
+#include "Item.hpp"
 #include <string>
 #include <map>
 
@@ -24,10 +25,16 @@ class PlantConfig {
     id(id), code(code), name(name), type(type), duration_to_harvest(duration_to_harvest), price(price) {}
 };
 
-class Plant {
+class Plant : public Item {
     public:
+    int duration;
 
+    Plant() : Item() {}
+    Plant(string code) : Item(code, ItemType::Plant) {}
+    Plant(string code, int duration) : Item(code, ItemType::Plant), duration(duration) {}
+    
     static map<string, PlantConfig> plant_config;
+    static map<string, string> name_to_code;
 };
 
 #endif

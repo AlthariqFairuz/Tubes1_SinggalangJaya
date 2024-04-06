@@ -17,6 +17,7 @@ using std::string;
 int main() {
     Game::muat_konfigurasi();
     Game::muat();
+    
     cout << "Game dimulai dari " << (*Game::current_player)->get_username() << endl;
 
 
@@ -58,7 +59,12 @@ int main() {
             (*Game::current_player)->panen();
         } else if (response == "TAMBAH_PEMAIN") {
             (*Game::current_player)->tambah_pemain();
-        } 
+        }
+
+
+        else if (response == "KELUAR") {
+            Game::exit();
+        }
         else {
             cout << "Tidak dikenal perintah (" << response << ")" << endl;
         }

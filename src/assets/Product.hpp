@@ -29,6 +29,7 @@ class Product {
     public:
 
     static map<string, ProductConfig> product_config;
+    static map<string, string> name_to_code;
 };
 
 

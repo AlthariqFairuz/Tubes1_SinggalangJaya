@@ -10,6 +10,7 @@ using std::string;
 class GameLogic {
     public:
     virtual ~GameLogic() {}
+    
     virtual void cetak_penyimpanan() {
         cout << get_username() << " tidak dapat mencetak penyimpanan" << endl;
     }

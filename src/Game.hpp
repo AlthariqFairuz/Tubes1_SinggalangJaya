@@ -13,6 +13,7 @@ class Game {
     static void next();
     static void simpan();
     static void tambah_pemain();
+    static void exit();
     
     // row = Vertical, col = Horizontal
     static int winning_money;

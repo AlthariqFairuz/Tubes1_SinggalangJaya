@@ -14,7 +14,9 @@ class Mayor : public Person, public StorageOwner, public GameLogic {
     public:
     Mayor(string username, int gold, int weight) :
     Person(username, gold, weight), StorageOwner(Game::storage_row, Game::storage_col) {}
-    
+    Mayor(string username, int gold, int weight, StorageOwner so) :
+    Person(username, gold, weight), StorageOwner(so) {}
+
     string get_username() const;
 };
 

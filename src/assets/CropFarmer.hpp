@@ -18,6 +18,9 @@ class CropFarmer : public Person, public StorageOwner, public CroplandOwner, pub
     public:
     CropFarmer(string username, int gold, int weight) :
     Person(username, gold, weight), StorageOwner(Game::storage_row, Game::storage_col), CroplandOwner(Game::cropland_row, Game::cropland_col) {}
+    CropFarmer(string username, int gold, int weight, StorageOwner so, CroplandOwner co) :
+    Person(username, gold, weight), StorageOwner(so), CroplandOwner(co) {}
+    
 
     string get_username() const;
     int calculate_tax() override;
