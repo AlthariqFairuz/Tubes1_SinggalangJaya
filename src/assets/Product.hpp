@@ -37,6 +37,7 @@ class Product : public Item {
 
     string get_name() override;
     int get_price() override;
+    int get_added_weight();
 
     virtual ProductType get_product_type() = 0;
 

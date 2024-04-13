@@ -19,6 +19,7 @@ class Command {
     static void tanam(StorageOwner &so, CroplandOwner &co);
     static void ternak(StorageOwner &so, PastureOwner &po);
     static void bangun(StorageOwner &so);
+    static void makan(Person &p, StorageOwner &so);
 
     static void beli(Person &p, StorageOwner &so);
 };

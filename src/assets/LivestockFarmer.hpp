@@ -31,7 +31,7 @@ class LivestockFarmer : public Person, public StorageOwner, public PastureOwner,
     void cetak_penyimpanan() const override;
     void cetak_peternakan() const override;
     void ternak() override;
-    
+    void makan() override;  
 
     void beli() override;
 };

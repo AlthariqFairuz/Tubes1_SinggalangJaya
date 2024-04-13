@@ -11,3 +11,7 @@ string Product::get_name() {
 int Product::get_price() {
     return Product::product_config.find(code)->second.price;
 }
+
+int Product::get_added_weight() {
+    return Product::product_config.find(code)->second.added_weight;
+}

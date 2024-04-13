@@ -19,7 +19,7 @@ class Person {
 
     Person(string username, int gold, int weight) :
     username(username), gold(gold), weight(weight) {}
-
+    int get_weight() const;
 
     virtual PersonType get_person_type() = 0;
 };

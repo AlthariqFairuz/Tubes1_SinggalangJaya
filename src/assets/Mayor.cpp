@@ -12,12 +12,16 @@ void Mayor::next() {
     // Tidak perlu tambah umur tanaman karena tidak ada ladang
 }
 
-void Mayor::cetak_penyimpanan() const {
+void Mayor:: cetak_penyimpanan() const {
     Command::cetak_penyimpanan(*dynamic_cast<StorageOwner const *>(this));
 }
 
 void Mayor::bangun() {
     Command::bangun(*dynamic_cast<StorageOwner*>(this));
+}
+
+void Mayor::makan() {
+    Command::makan(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }
 
 void Mayor::beli() {

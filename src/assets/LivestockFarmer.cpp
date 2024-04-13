@@ -31,7 +31,12 @@ void LivestockFarmer::ternak() {
     Command::ternak(*dynamic_cast<StorageOwner*>(this), *dynamic_cast<PastureOwner*>(this));
 }
 
+void LivestockFarmer::makan() {
+    Command::makan(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
+}
+
 void LivestockFarmer::beli() {
     Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }
+
 

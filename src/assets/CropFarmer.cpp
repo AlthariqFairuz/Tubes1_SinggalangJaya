@@ -29,6 +29,10 @@ void CropFarmer::tanam() {
     Command::tanam(*dynamic_cast<StorageOwner*>(this), *dynamic_cast<CroplandOwner*>(this));
 }
 
+void CropFarmer::makan() {
+    Command::makan(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
+}
+
 void CropFarmer::beli() {
     Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }

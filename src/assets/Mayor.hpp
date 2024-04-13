@@ -28,6 +28,8 @@ class Mayor : public Person, public StorageOwner, public GameLogic {
 
     void bangun() override;
 
+    void makan() override;
+
     void beli() override;
 };
 
