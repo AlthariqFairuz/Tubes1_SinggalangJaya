@@ -71,7 +71,11 @@ class PastureOwner {
     
     void set_at(int row, int col, Animal *animal);
 
+    Coordinate query_animal();
+
     Coordinate query_empty_slot();
+
+    Coordinate query_specified_animal(string _code);
 
     void cetak_peternakan() const;
 

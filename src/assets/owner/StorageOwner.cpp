@@ -1,4 +1,5 @@
 #include "StorageOwner.hpp"
+#include "../Product.hpp"
 #include <iostream>
 
 using std::cout, std::cin, std::endl;
@@ -87,4 +88,88 @@ Coordinate StorageOwner::query_specific_item(ItemType item_type) {
         }
         return loc;
     }
+}
+
+Coordinate StorageOwner::query_consumable() {
+    while (true) {
+        cout << "Pilih slot:" << endl;
+        cetak_penyimpanan();
+        cout << "Petak slot: ";
+        string slot;
+        cin >> slot;
+
+        Coordinate loc = location(slot);
+        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= storage.get_rows() || loc.col < 0 || loc.col >= storage.get_cols()) {
+            cout << "Koordinat tidak valid" << endl;
+            continue; 
+        }
+        if (storage.is_empty(loc.row, loc.col)) {
+            cout << "Slot merupakan slot kosong. Ulangi langi." << endl;
+            continue;
+        }
+        if (storage(loc.row, loc.col)->get_item_type() != ItemType::Product) {
+            cout << "Item tidak bukan merupakan produk. Ulangi lagi." << endl;
+            continue;
+        }
+        if (!dynamic_cast<Product*>(storage(loc.row, loc.col))->is_consumable()) {
+            cout << "Produk tidak dapat dikonsum. Ulangi lagi." << endl;
+            continue;
+        }
+        return loc;
+    }
+}
+
+Coordinate StorageOwner::query_consumable(ProductType product_type) {
+    while (true) {
+        cout << "Pilih slot:" << endl;
+        cetak_penyimpanan();
+        cout << "Petak slot: ";
+        string slot;
+        cin >> slot;
+
+        Coordinate loc = location(slot);
+        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= storage.get_rows() || loc.col < 0 || loc.col >= storage.get_cols()) {
+            cout << "Koordinat tidak valid" << endl;
+            continue; 
+        }
+        if (storage.is_empty(loc.row, loc.col)) {
+            cout << "Slot merupakan slot kosong. Ulangi langi." << endl;
+            continue;
+        }
+        if (storage(loc.row, loc.col)->get_item_type() != ItemType::Product) {
+            cout << "Item tidak bukan merupakan produk. Ulangi lagi." << endl;
+            continue;
+        }
+        if (!dynamic_cast<Product*>(storage(loc.row, loc.col))->is_consumable()) {
+            cout << "Produk tidak dapat dikonsum. Ulangi lagi." << endl;
+            continue;
+        }
+        if (dynamic_cast<Product*>(storage(loc.row, loc.col))->get_product_type() != product_type) {
+            cout << "Produk bukan tipe yang dapat dikonsum oleh yang bersangkutan" << endl;
+            continue;
+        }
+        return loc;
+    }
+}
+
+bool StorageOwner::is_exist_consumable() {
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            if (!storage.is_empty(i, j) && storage(i, j)->get_item_type() == ItemType::Product && dynamic_cast<Product*>(storage(i, j))->is_consumable()) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool StorageOwner::is_exist_consumable(ProductType product_type) {
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            if (!storage.is_empty(i, j) && storage(i, j)->get_item_type() == ItemType::Product && dynamic_cast<Product*>(storage(i, j))->is_consumable() && dynamic_cast<Product*>(storage(i, j))->get_product_type() == product_type) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

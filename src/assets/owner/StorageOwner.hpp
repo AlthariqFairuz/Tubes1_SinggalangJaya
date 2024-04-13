@@ -2,6 +2,7 @@
 #define ASSETS_OWNER_STORAGE_OWNER_HPP
 
 #include "../Item.hpp"
+#include "../Product.hpp"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -73,6 +74,14 @@ class StorageOwner {
     Coordinate query_empty_slot();
 
     Coordinate query_specific_item(ItemType item_type);
+
+    Coordinate query_consumable();
+
+    Coordinate query_consumable(ProductType product_type);
+
+    bool is_exist_consumable();
+
+    bool is_exist_consumable(ProductType product_type);
 
     MatrixItem storage;
     // private:

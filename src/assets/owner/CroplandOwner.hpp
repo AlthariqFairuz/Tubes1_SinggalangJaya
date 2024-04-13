@@ -80,6 +80,7 @@ class CroplandOwner {
     void cetak_ladang() const;
     void tambah_umur_ladang();
     Coordinate query_empty_slot();
+    Coordinate query_specified_plant(string _code);
 
     MatrixPlant land;
     // private:

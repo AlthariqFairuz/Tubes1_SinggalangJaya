@@ -16,6 +16,10 @@ void Mayor::cetak_penyimpanan() const {
     Command::cetak_penyimpanan(*dynamic_cast<StorageOwner const *>(this));
 }
 
+void Mayor::makan() {
+    Command::makan(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
+}
+
 void Mayor::bangun() {
     Command::bangun(*dynamic_cast<StorageOwner*>(this));
 }

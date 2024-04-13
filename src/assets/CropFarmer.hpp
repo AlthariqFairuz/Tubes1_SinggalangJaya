@@ -32,7 +32,9 @@ class CropFarmer : public Person, public StorageOwner, public CroplandOwner, pub
 
     void cetak_penyimpanan() const override;
     void cetak_ladang() const override;
+    void makan() override;
     void tanam() override;
+    void panen() override;
 
     void beli() override;
 };

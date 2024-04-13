@@ -25,8 +25,16 @@ void CropFarmer::cetak_ladang() const {
     Command::cetak_ladang(*dynamic_cast<CroplandOwner const *>(this));
 }
 
+void CropFarmer::makan() {
+    Command::makan(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
+}
+
 void CropFarmer::tanam() {
     Command::tanam(*dynamic_cast<StorageOwner*>(this), *dynamic_cast<CroplandOwner*>(this));
+}
+
+void CropFarmer::panen() {
+    Command::panen_petani(*dynamic_cast<StorageOwner*>(this), *dynamic_cast<CroplandOwner*>(this));
 }
 
 void CropFarmer::beli() {

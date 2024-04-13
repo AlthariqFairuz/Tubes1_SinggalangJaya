@@ -4,8 +4,12 @@
 #include "Product.hpp"
 
 class AnimalProduct : public Product {
+    public:
+    
+    AnimalProduct(string _code);
     ItemType get_item_type() override;
     ProductType get_product_type() override;
+    bool is_consumable() override;
 };
 
 #endif

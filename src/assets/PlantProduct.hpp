@@ -10,6 +10,7 @@ enum class PlantProductType {
 
 class PlantProduct : public Product {
     public:
+    PlantProduct(string _code);
     virtual PlantProductType get_plant_product_type() = 0;
 };
 

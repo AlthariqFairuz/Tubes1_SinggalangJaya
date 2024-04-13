@@ -38,3 +38,29 @@ Coordinate CroplandOwner::query_empty_slot() {
         return loc;
     }
 }
+
+Coordinate CroplandOwner::query_specified_plant(string _code) {
+    while (true) {
+        cout << "Pilih slot:" << endl;
+        cetak_ladang();
+
+        cout << "Petak slot: ";
+        string slot;
+        cin >> slot;
+
+        Coordinate loc = location(slot);
+        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= land.get_rows() || loc.col < 0 || loc.col >= land.get_cols()) {
+            cout << "Koordinat tidak valid" << endl;
+            continue; 
+        }
+        if (land.is_empty(loc.row, loc.col)) {
+            cout << "Slot merupakan slot kosong. Ulangi langi." << endl;
+            continue;
+        }
+        if (land(loc.row, loc.col)->code != _code) {
+            cout << "Tumbuhan tidak memiliki kode yang sesuai dengan yang ditentukan sebelumnya" << endl;
+            continue;
+        }
+        return loc;
+    }
+}

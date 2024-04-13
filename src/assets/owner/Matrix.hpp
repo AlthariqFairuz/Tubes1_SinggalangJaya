@@ -160,8 +160,10 @@ class Matrix<T*> {
 class Coordinate {
     public:
     int row, col;
+    Coordinate() {}
     Coordinate(int row, int col) : row(row), col(col) {}
-
+    Coordinate(const Coordinate &other) : row(other.row), col(other.col) {}
+    
     bool operator==(const Coordinate &other);
 };
 
