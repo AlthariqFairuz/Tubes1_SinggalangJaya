@@ -11,32 +11,38 @@ using std::cout, std::endl;
 using std::vector;
 using std::string;
 
-class MatrixItem : public Matrix<Item> {
+class MatrixItem : public Matrix<Item*> {
     public:
 
-    MatrixItem(int rows, int cols) : Matrix<Item>(rows, cols) {}
+    MatrixItem(int rows, int cols) : Matrix<Item*>(rows, cols) {
 
-    void print() {
+    }
+
+    ~MatrixItem() {
+
+    }
+
+    void print() const {
         cout << "   ";
-        for (int i = 0; i < get_cols(); ++i) {
+        for (int i = 0; i < cols; ++i) {
             cout << "   " << (char)('A' + i) << "  ";
         }
         cout << '\n';
         cout << "   ";
-        for (int i = 0; i < get_cols(); ++i) {
+        for (int i = 0; i < cols; ++i) {
             cout << "+-----";
         }
         cout << "+\n";
-        for (int i = 0; i < get_rows(); ++i) {
+        for (int i = 0; i < rows; ++i) {
             std::stringstream ss;
             ss << std::setw(2) << std::setfill('0') << i;
             cout << ss.str() << " ";
 
-            for (int j = 0; j < get_cols(); ++j) {
+            for (int j = 0; j < cols; ++j) {
                 auto entry = data[i][j];
                 string entry_string;
-                if (entry.item_type == ItemType::Null) entry_string = "   ";
-                else entry_string = entry.code;
+                if (entry == 0) entry_string = "   ";
+                else entry_string = entry->code;
                 cout << "| " << entry_string << " ";
             }
             cout << "|\n   ";
@@ -53,29 +59,24 @@ class StorageOwner {
     public:
 
     StorageOwner(int rows, int cols) : storage(rows, cols) {}
-    
 
-    virtual void cetak_penyimpanan() {
-        cout << "===========" << endl;
-        cout << "Penyimpanan" << endl;
-        cout << "===========" << endl;
-        storage.print();
-    }
+    void set_at(int row, int col, Item *item);
 
-    void add_item(Item t) {
-        for (int i = 0; i < storage.get_rows(); ++i) {
-            for (int j = 0; j < storage.get_cols(); ++j) {
-                if (storage(i, j) == Item()) {
-                    storage(i, j) = t;
-                    return;
-                }
-            }
-        }
-    }
+    void operator+=(Item *item);
 
+    void cetak_penyimpanan() const;
 
-    private:
+    int count_empty_slots();
+
+    bool is_exist_specified_item(ItemType item_type);
+
+    Coordinate query_empty_slot();
+
+    Coordinate query_specific_item(ItemType item_type);
+
     MatrixItem storage;
+    // private:
+    // MatrixItem storage;
 };
 
 #endif

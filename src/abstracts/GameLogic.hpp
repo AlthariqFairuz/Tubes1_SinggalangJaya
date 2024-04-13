@@ -11,16 +11,16 @@ class GameLogic {
     public:
     virtual ~GameLogic() {}
     
-    virtual void cetak_penyimpanan() {
+    virtual void cetak_penyimpanan() const {
         cout << get_username() << " tidak dapat mencetak penyimpanan" << endl;
     }
     virtual void pungut_pajak() {
         cout << get_username() << " tidak dapat memungut pajak" << endl;
     }
-    virtual void cetak_ladang() {
+    virtual void cetak_ladang() const {
         cout << get_username() << " tidak dapat mencetak ladang" << endl;
     }
-    virtual void cetak_peternakan() {
+    virtual void cetak_peternakan() const {
         cout << get_username() << " tidak dapat mencetak peternakan" << endl;
     }
     virtual void tanam() {
@@ -52,6 +52,7 @@ class GameLogic {
     }
 
     virtual string get_username() const = 0;
+    virtual void next() = 0;
 };
 
 class CompareUsername {

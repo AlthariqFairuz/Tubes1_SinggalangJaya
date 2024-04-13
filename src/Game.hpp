@@ -12,7 +12,6 @@ class Game {
     static void muat();
     static void next();
     static void simpan();
-    static void tambah_pemain();
     static void exit();
     
     // row = Vertical, col = Horizontal
@@ -22,7 +21,7 @@ class Game {
     static int cropland_row, cropland_col;
     static int pasture_row, pasture_col;
     
-    static set<GameLogic *, CompareUsername>::iterator current_player;
+    static set<GameLogic*, CompareUsername>::iterator current_player;
     
     private:
     static set<GameLogic*, CompareUsername> players;

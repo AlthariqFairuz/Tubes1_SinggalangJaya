@@ -1,7 +1,12 @@
 #include "Matrix.hpp"
 
-string format_int(int num, int desired_length) {
-    std::stringstream ss;
-    ss << std::setw(desired_length) << std::setfill('0') << num;
-    return ss.str();
+bool Coordinate::operator==(const Coordinate &other) {
+    return row == other.row && col == other.col;
+}
+
+Coordinate location(string loc) {
+    if (loc.size() != 3) return Coordinate(-1, -1);
+    int col = loc[0] - 'A';
+    int row = (loc[1] - '0') * 10 + (loc[2] - '0');
+    return Coordinate(row, col);
 }

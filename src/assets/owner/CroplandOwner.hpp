@@ -11,48 +11,62 @@ using std::vector;
 using std::string;
 
 
-class MatrixPlant : public Matrix<Plant> {
+class MatrixPlant : public Matrix<Plant*> {
     public:
 
-    MatrixPlant(int rows, int cols) : Matrix<Plant>(rows, cols) {}
+    MatrixPlant(int rows, int cols) : Matrix<Plant*>(rows, cols) {
 
-    void print() {
+    }
+    ~MatrixPlant() {
+
+    }
+
+    void print() const {
         cout << "   ";
-        for (int i = 0; i < get_cols(); ++i) {
+        for (int i = 0; i < cols; ++i) {
             cout << "   " << (char)('A' + i) << "  ";
         }
         cout << '\n';
         cout << "   ";
-        for (int i = 0; i < get_cols(); ++i) {
+        for (int i = 0; i < cols; ++i) {
             cout << "+-----";
         }
         cout << "+\n";
-        for (int i = 0; i < get_rows(); ++i) {
+        for (int i = 0; i < rows; ++i) {
             std::stringstream ss;
             ss << std::setw(2) << std::setfill('0') << i;
             cout << ss.str() << " ";
 
-            for (int j = 0; j < get_cols(); ++j) {
+            for (int j = 0; j < cols; ++j) {
                 auto entry = data[i][j];
                 string entry_string;
-                if (entry.item_type == ItemType::Null) entry_string = "   ";
-                else entry_string = entry.code;
+                if (entry == 0) entry_string = "   ";
+                else entry_string = entry->code;
 
                 cout << "| ";
-                if (entry.duration >= Plant::plant_config[entry.code].duration_to_harvest) {
+                if (entry != 0 && entry->ready_to_harvest()) {
                     print_green(entry_string);
                 } else {
-                    print_normal(entry_string);
+                    print_red(entry_string);
                 }
                 cout << " ";
             }
             cout << "|\n   ";
-            for (int i = 0; i < get_cols(); ++i) {
+            for (int i = 0; i < cols; ++i) {
                 cout << "+-----";
             }
             cout << "+\n";
         }
         cout.flush();
+    }
+    void tambah_umur_ladang() {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (data[i][j] != 0) {
+                    data[i][j]->increment_age();
+                }
+            }
+        }
     }
 };
 
@@ -61,30 +75,15 @@ class CroplandOwner {
     public:
     CroplandOwner(int rows, int cols) : land(rows, cols) {}
 
-    virtual void cetak_ladang() {
-        cout << "======" << endl;
-        cout << "Ladang" << endl;
-        cout << "======" << endl;
-        land.print();
-    }
+    void set_at(int row, int col, Plant *plant);
 
-    void add_plant(Plant t) {
-        for (int i = 0; i < land.get_rows(); ++i) {
-            for (int j = 0; j < land.get_cols(); ++j) {
-                if (land(i, j) == Plant()) {
-                    land(i, j) = t;
-                    return;
-                }
-            }
-        }
-    }
-    void add_plant_at(Plant t, string location) {
-        Coordinate c = Matrix<Plant>::location(location);
-        land(c.row, c.col) = t;
-    }
+    void cetak_ladang() const;
+    void tambah_umur_ladang();
+    Coordinate query_empty_slot();
 
-    private:
     MatrixPlant land;
+    // private:
+    // MatrixPlant land;
 };
 
 #endif

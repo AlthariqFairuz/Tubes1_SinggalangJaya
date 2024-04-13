@@ -8,6 +8,8 @@
 #include "../abstracts/GameLogic.hpp"
 #include "../Game.hpp"
 
+#include "../commands/commands.hpp"
+
 #include <vector>
 #include <string>
 
@@ -21,10 +23,18 @@ class CropFarmer : public Person, public StorageOwner, public CroplandOwner, pub
     CropFarmer(string username, int gold, int weight, StorageOwner so, CroplandOwner co) :
     Person(username, gold, weight), StorageOwner(so), CroplandOwner(co) {}
     
+    PersonType get_person_type() override;
 
     string get_username() const;
+    void next() override;
+
     int calculate_tax() override;
 
+    void cetak_penyimpanan() const override;
+    void cetak_ladang() const override;
+    void tanam() override;
+
+    void beli() override;
 };
 
 

@@ -21,14 +21,19 @@ class LivestockFarmer : public Person, public StorageOwner, public PastureOwner,
     LivestockFarmer(string username, int gold, int weight, StorageOwner so, PastureOwner po) :
     Person(username, gold, weight), StorageOwner(so), PastureOwner(po) {}
 
+    PersonType get_person_type() override;
 
-    string get_username() const;
-    void cetak_penyimpanan() override;
-    void cetak_peternakan() override;
+    string get_username() const override;
+    void next() override;
+
+    int calculate_tax() override;
+
+    void cetak_penyimpanan() const override;
+    void cetak_peternakan() const override;
     void ternak() override;
     
 
-    int calculate_tax() override;
+    void beli() override;
 };
 
 

@@ -1,6 +1,7 @@
 #ifndef ASSETS_ITEM_HPP
 #define ASSETS_ITEM_HPP
 
+#include <map>
 #include <string>
 
 using std::string;
@@ -10,20 +11,20 @@ enum class ItemType {
     Plant,
     Product,
     Building,
-    Null,
 };
 
 class Item {
     public:
     string code;
-    ItemType item_type;
 
-    Item() : code(""), item_type(ItemType::Null) {}
-    Item(string code, ItemType item_type) : code(code), item_type(item_type) {}
+    Item(string _code);
+    virtual ~Item();
 
-    
+    virtual ItemType get_item_type() = 0;
+    virtual string get_name() = 0;
+    virtual int get_price() = 0;
 
-    bool operator==(const Item &other) { return code == other.code && item_type == other.item_type; }
+    static string get_item_type_string(ItemType item_type);
 };
 
 #endif

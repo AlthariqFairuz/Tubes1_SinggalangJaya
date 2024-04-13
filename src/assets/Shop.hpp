@@ -17,30 +17,28 @@ using std::vector;
 
 class ShopItem {
     public:
-    ShopItem(string name, ItemType item_type, int price, int stock) : name(name), item_type(item_type), price(price), stock(stock) {} 
+    ShopItem(vector<Item*> _items, int _stock) : items(_items), stock(_stock) {} 
 
-    string name;
-    ItemType item_type;
-    int price;
+    vector<Item*> items;
     int stock;
 };
 
+
+// Hanya tanaman dan tumbuhan yang tak hingga.
+
 class Shop {
     public:
-    static map<string, AnimalConfig> animal_config;
-    static map<string, PlantConfig> plant_config;
-    static map<string, ProductConfig> product_config;
-    static vector<ShopItem> other_offers;
+    static map<string, ShopItem> other_offers;
 
-    void print_shop() {
+    static void print_shop() {
         for (auto item : other_offers) {
-            cout << item.name << " - " << item.price << " (" << item.stock << ")\n";
+            cout << item.second.items.back()->get_name() << " - " << item.second.items.back()->code << " - " << item.second.items.back()->get_price() << " (" << item.second.stock << ")" << endl;
         }
-        for (auto &[name, ac] : animal_config) {
-            cout << name << " - " << ac.price << '\n';
+        for (auto &[name, ac] : Animal::animal_config) {
+            cout << ac.name << " - " << ac.code << " - " << ac.price << '\n';
         }
-        for (auto &[name, pc] : plant_config) {
-            cout << name << " - " << pc.price << '\n';
+        for (auto &[name, pc] : Plant::plant_config) {
+            cout << pc.name << " - " << pc.code << " - " << pc.price << '\n';
         }
         cout << endl;
     }

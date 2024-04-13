@@ -1,11 +1,18 @@
 #ifndef ASSETS_PRODUCT_HPP
 #define ASSETS_PRODUCT_HPP
 
+#include "Item.hpp"
+
 #include <string>
 #include <map>
 
 using std::string;
 using std::map;
+
+enum class ProductType {
+    Plant,
+    Animal,
+};
 
 class ProductConfig {
     public:
@@ -25,8 +32,13 @@ class ProductConfig {
     id(id), code(code), name(name), type(type), added_weight(added_weight), price(price) {}
 };
 
-class Product {
+class Product : public Item {
     public:
+
+    string get_name() override;
+    int get_price() override;
+
+    virtual ProductType get_product_type() = 0;
 
     static map<string, ProductConfig> product_config;
     static map<string, string> name_to_code;

@@ -37,6 +37,20 @@ int Game::pasture_row, Game::pasture_col;
 set<GameLogic*, CompareUsername> Game::players;
 set<GameLogic*, CompareUsername>::iterator Game::current_player;
 
+void Game::next() {
+    // Lakukan next sesuai dengan role:
+    // - Jika current_player adalah petani, maka tumbuhan di ladang pertanian akan bertambah satu.
+    (*current_player)->next();
+
+    // Pindah ke player selanjutnya
+    ++current_player;
+    if (current_player == players.end()) {
+        current_player = players.begin();
+    }
+    cout << "Sekarang giliran " << (*current_player)->get_username() << endl;
+}
+
+
 void Game::muat_konfigurasi() {
     // konfigurasi/plant.txt
     ifstream plant_file("konfigurasi/plant.txt");
@@ -101,7 +115,7 @@ void Game::muat_konfigurasi() {
         string plant_name;
         int quantity;
         while (ss >> plant_name >> quantity) {
-            r.materials.push_back(RecipeMaterial(Plant::name_to_code[plant_name], quantity));
+            r.materials[Plant::name_to_code[plant_name]] = quantity;
         }
         Recipe::recipe_config[r.code] = r;
         Recipe::name_to_code[r.name] = r.code;
@@ -119,10 +133,6 @@ void Game::muat_konfigurasi() {
     }
     misc_file.close();
 
-    // muat toko
-    Shop::animal_config = Animal::animal_config;
-    Shop::plant_config = Plant::plant_config;
-    Shop::product_config = Product::product_config;
 }
 
 void Game::muat() {
@@ -143,117 +153,108 @@ void Game::muat() {
 
         current_player = players.begin();
     } else {
-        string file_location;
-        cout << "Masukkan lokasi berkas state: ";
-        cout.flush();
-        cin.ignore();
-        getline(cin, file_location);
-        ifstream file(file_location);
-        if (!file.is_open()) {
-            cout << "File state tidak ada\n";
-            Game::muat(); 
-            return;
-        }
+        // string file_location;
+        // cout << "Masukkan lokasi berkas state: ";
+        // cout.flush();
+        // cin.ignore();
+        // getline(cin, file_location);
+        // ifstream file(file_location);
+        // if (!file.is_open()) {
+        //     cout << "File state tidak ada\n";
+        //     Game::muat(); 
+        //     return;
+        // }
 
-        int players_count;
-        file >> players_count;
-        for (int i = 0; i < players_count; ++i) {
-            string username, role; int gold, weight;
+        // int players_count;
+        // file >> players_count;
+        // for (int i = 0; i < players_count; ++i) {
+        //     string username, role; int gold, weight;
 
-            StorageOwner so(Game::storage_row, Game::storage_col);            
+        //     StorageOwner so(Game::storage_row, Game::storage_col);            
 
-            file >> username >> role >> gold >> weight;
+        //     file >> username >> role >> gold >> weight;
             
-            int total_storage_items;
-            file >> total_storage_items;
-            for (int j = 0; j < total_storage_items; ++j) {
-                string name;
-                file >> name;
-                if (Animal::name_to_code.find(name) != Animal::name_to_code.end()) {
-                    so.add_item(Item(Animal::name_to_code[name], ItemType::Animal));
-                } else if (Plant::name_to_code.find(name) != Plant::name_to_code.end()) {
-                    so.add_item(Item(Plant::name_to_code[name], ItemType::Plant));
-                } else if (Product::name_to_code.find(name) != Product::name_to_code.end()) {
-                    so.add_item(Item(Product::name_to_code[name], ItemType::Product));
-                } else if (Recipe::name_to_code.find(name) != Recipe::name_to_code.end()) {
-                    so.add_item(Item(Recipe::name_to_code[name], ItemType::Building));
-                } else {
-                    cout << "File muat tidak valid karena ada barang yang tidak dikenal kodenya." << endl;
-                    std::exit(0);
-                }
-            }
+        //     int total_storage_items;
+        //     file >> total_storage_items;
+        //     for (int j = 0; j < total_storage_items; ++j) {
+        //         string name;
+        //         file >> name;
+        //         if (Animal::name_to_code.find(name) != Animal::name_to_code.end()) {
+        //             // so.add_item(Item(Animal::name_to_code[name], ItemType::Animal));
+        //         } else if (Plant::name_to_code.find(name) != Plant::name_to_code.end()) {
+        //             so.add_item(Item(Plant::name_to_code[name], ItemType::Plant));
+        //         } else if (Product::name_to_code.find(name) != Product::name_to_code.end()) {
+        //             so.add_item(Item(Product::name_to_code[name], ItemType::Product));
+        //         } else if (Recipe::name_to_code.find(name) != Recipe::name_to_code.end()) {
+        //             so.add_item(Item(Recipe::name_to_code[name], ItemType::Building));
+        //         } else {
+        //             cout << "File muat tidak valid karena ada barang yang tidak dikenal kodenya." << endl;
+        //             std::exit(0);
+        //         }
+        //     }
 
-            if (role == "Petani") {
-                CroplandOwner co(Game::cropland_row, Game::cropland_col);
-                int total_plants;
-                file >> total_plants;
-                for (int j = 0; j < total_plants; ++j) {
-                    string location, name; int duration;
-                    file >> location >> name >> duration;
-                    if (Plant::name_to_code.find(name) == Plant::name_to_code.end()) {
-                        cout << "Terdapat tumbuhan dengan nama yang tidak tercatat di file konfigurasi." << endl;
-                        std::exit(0);
-                    }
-                    co.add_plant_at(Plant(Plant::name_to_code[name], duration), location);
-                }
-                players.insert(new CropFarmer(username, gold, weight, so, co));
+        //     if (role == "Petani") {
+        //         CroplandOwner co(Game::cropland_row, Game::cropland_col);
+        //         int total_plants;
+        //         file >> total_plants;
+        //         for (int j = 0; j < total_plants; ++j) {
+        //             string location, name; int duration;
+        //             file >> location >> name >> duration;
+        //             if (Plant::name_to_code.find(name) == Plant::name_to_code.end()) {
+        //                 cout << "Terdapat tumbuhan dengan nama yang tidak tercatat di file konfigurasi." << endl;
+        //                 std::exit(0);
+        //             }
+        //             co.add_plant_at(Plant(Plant::name_to_code[name], duration), location);
+        //         }
+        //         players.insert(new CropFarmer(username, gold, weight, so, co));
 
-            } else if (role == "Peternak") {
-                PastureOwner po(Game::pasture_row, Game::pasture_col);
-                int total_animals;
-                file >> total_animals;
-                for (int j = 0; j < total_animals; ++j) {
-                    string location, name; int weight;
-                    file >> location >> name >> weight;
-                    if (Animal::name_to_code.find(name) == Animal::name_to_code.end()) {
-                        cout << "Terdapat binatang dengan nama yang tidak tercatat di file konfigurasi." << endl;
-                        std::exit(0);
-                    }
-                    po.add_animal_at(Animal(Animal::name_to_code[name], weight), location);
-                }
-                players.insert(new LivestockFarmer(username, gold, weight, so, po));
-            } else if (role == "Walikota") {
-                players.insert(new Mayor(username, gold, weight, so));
-            } else {
-                cout << "File muat tidak valid karena ada role yang tidak dikenal." << endl;
-                std::exit(0);
-            }
-        }
+        //     } else if (role == "Peternak") {
+        //         PastureOwner po(Game::pasture_row, Game::pasture_col);
+        //         int total_animals;
+        //         file >> total_animals;
+        //         for (int j = 0; j < total_animals; ++j) {
+        //             string location, name; int weight;
+        //             file >> location >> name >> weight;
+        //             if (Animal::name_to_code.find(name) == Animal::name_to_code.end()) {
+        //                 cout << "Terdapat binatang dengan nama yang tidak tercatat di file konfigurasi." << endl;
+        //                 std::exit(0);
+        //             }
+        //             po.add_animal_at(Animal(Animal::name_to_code[name], weight), location);
+        //         }
+        //         players.insert(new LivestockFarmer(username, gold, weight, so, po));
+        //     } else if (role == "Walikota") {
+        //         players.insert(new Mayor(username, gold, weight, so));
+        //     } else {
+        //         cout << "File muat tidak valid karena ada role yang tidak dikenal." << endl;
+        //         std::exit(0);
+        //     }
+        // }
         
-        int total_items;
-        file >> total_items;
-        for (int j = 0; j < total_items; ++j) {
-            string name; int stock;
-            file >> name >> stock;
+        // int total_items;
+        // file >> total_items;
+        // for (int j = 0; j < total_items; ++j) {
+        //     string name; int stock;
+        //     file >> name >> stock;
 
-            if (Product::name_to_code.find(name) != Product::name_to_code.end()) {
-                ProductConfig pc = Product::product_config[Product::name_to_code[name]];
-                ShopItem si(pc.name, ItemType::Product, pc.price, stock);
-                Shop::other_offers.push_back(si);
-            } else if (Recipe::name_to_code.find(name) != Recipe::name_to_code.end()) {
-                Recipe rc = Recipe::recipe_config[Recipe::name_to_code[name]];
-                ShopItem si(rc.name, ItemType::Building, rc.price, stock);
-                Shop::other_offers.push_back(si);
-            } else {
-                cout << "File muat tidak valid karena ada barang yang tidak dikenal kodenya." << endl;
-                std::exit(0);
-            }
-        }
+        //     if (Product::name_to_code.find(name) != Product::name_to_code.end()) {
+        //         ProductConfig pc = Product::product_config[Product::name_to_code[name]];
+        //         ShopItem si(pc.name, ItemType::Product, pc.price, stock);
+        //         Shop::other_offers.push_back(si);
+        //     } else if (Recipe::name_to_code.find(name) != Recipe::name_to_code.end()) {
+        //         Recipe rc = Recipe::recipe_config[Recipe::name_to_code[name]];
+        //         ShopItem si(rc.name, ItemType::Building, rc.price, stock);
+        //         Shop::other_offers.push_back(si);
+        //     } else {
+        //         cout << "File muat tidak valid karena ada barang yang tidak dikenal kodenya." << endl;
+        //         std::exit(0);
+        //     }
+        // }
     }
-}
-
-void Game::next() {
-    ++current_player;
-    if (current_player == players.end()) {
-        current_player = players.begin();
-    }
-    cout << "Sekarang giliran " << (*current_player)->get_username() << endl;
 }
 
 void Game::simpan() {
     
 }
-
 
 
 void Game::exit() {

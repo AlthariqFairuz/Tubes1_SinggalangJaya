@@ -8,6 +8,11 @@
 using std::string;
 using std::map;
 
+enum class PlantType {
+    Material,
+    Fruit,
+};
+
 class PlantConfig {
     public:
     int id;
@@ -17,22 +22,31 @@ class PlantConfig {
     int duration_to_harvest;
     int price;
 
-    PlantConfig() {}
-    PlantConfig(const PlantConfig& other) :
-    id(other.id), code(other.code), name(other.name), type(other.type), duration_to_harvest(other.duration_to_harvest), price(other.price) {}
+    PlantConfig();
+    PlantConfig(const PlantConfig& other);
+    PlantConfig(int id, string code, string name, string type, int duration_to_harvest, int price);
 
-    PlantConfig(int id, string code, string name, string type, int duration_to_harvest, int price) :
-    id(id), code(code), name(name), type(type), duration_to_harvest(duration_to_harvest), price(price) {}
+
+    Item* to_item();
 };
 
 class Plant : public Item {
     public:
+    // PlantType plant_type;
     int duration;
 
-    Plant() : Item() {}
-    Plant(string code) : Item(code, ItemType::Plant) {}
-    Plant(string code, int duration) : Item(code, ItemType::Plant), duration(duration) {}
+    Plant(string _code);
+    // Plant(string code, PlantType plant_type);
+    // Plant(string code, PlantType plant_type, int duration);
+
+    string get_name() override;
+    int get_price() override;
+
+    virtual PlantType get_plant_type() = 0;
+    virtual void increment_age();
+    virtual bool ready_to_harvest();
     
+
     static map<string, PlantConfig> plant_config;
     static map<string, string> name_to_code;
 };

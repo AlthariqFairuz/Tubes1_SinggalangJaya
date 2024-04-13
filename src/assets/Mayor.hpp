@@ -6,6 +6,8 @@
 #include "../abstracts/GameLogic.hpp"
 #include "../Game.hpp"
 
+#include "../commands/commands.hpp"
+
 #include <string>
 
 using std::string;
@@ -17,7 +19,16 @@ class Mayor : public Person, public StorageOwner, public GameLogic {
     Mayor(string username, int gold, int weight, StorageOwner so) :
     Person(username, gold, weight), StorageOwner(so) {}
 
-    string get_username() const;
+    PersonType get_person_type() override;
+
+    string get_username() const override;
+    void next() override;
+
+    void cetak_penyimpanan() const override;
+
+    void bangun() override;
+
+    void beli() override;
 };
 
 #endif
