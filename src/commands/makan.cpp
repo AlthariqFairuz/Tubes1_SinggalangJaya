@@ -72,6 +72,7 @@ void Command::makan(Person &p, StorageOwner &so) {
     else {
         bool valid = false;
         while (!valid) {
+            // Ambil slot kosong
             if (so.storage.is_empty(loc.row, loc.col) || loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= so.storage.get_rows() || loc.col < 0 || loc.col >= so.storage.get_cols()) {
                 cout << endl;
                 cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl << "Silahkan masukan slot yang berisi makanan."<< endl;
@@ -79,6 +80,7 @@ void Command::makan(Person &p, StorageOwner &so) {
                 cin >> slot;
                 loc = location(slot);
             }
+            // Ambil yang ga bisa dimakan
             else if (so.storage(loc.row, loc.col)->get_item_type() != ItemType::Product || selected_consumable->get_added_weight() < 1) {  
                 cout << endl;
                 cout << R"(Apa yang kamu lakukan??!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan.)" << endl;
@@ -86,6 +88,7 @@ void Command::makan(Person &p, StorageOwner &so) {
                 cin >> slot;
                 loc = location(slot);
             }
+            // Valid
             else {
                 valid = true;
                 p.weight += selected_consumable->get_added_weight();
