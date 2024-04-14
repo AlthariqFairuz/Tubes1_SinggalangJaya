@@ -40,7 +40,7 @@ void Command::makan(Person &p, StorageOwner &so) {
         // Ambil yang ga bisa dimakan/bukan produk
         else if (so.storage(loc.row, loc.col)->get_item_type() != ItemType::Product || !dynamic_cast<Product*>(so.storage(loc.row, loc.col))->is_consumable()) {  
             cout << endl;
-            cout << R"(Apa yang kamu lakukan??!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan.)" << endl;
+            cout << R"(Apa yang kamu lakukan??!! Kamu mencoba untuk memakan itu?!!)" << endl << "Silahkan masukan slot yang berisi makanan.)" << endl;
             continue;
         }
 
