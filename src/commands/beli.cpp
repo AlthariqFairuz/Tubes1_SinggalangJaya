@@ -18,7 +18,7 @@ void Command::beli(Person &p, StorageOwner &so) {
     cin >> item_code;
 
     if (p.get_person_type() == PersonType::Walikota && Recipe::recipe_config.find(item_code) != Recipe::recipe_config.end()) {
-        cout << "Walikita tidak dapat membeli bangunan" << endl;
+        cout << "Walikota tidak dapat membeli bangunan" << endl;
         return;
     }
 

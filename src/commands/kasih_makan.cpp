@@ -4,6 +4,13 @@
 using std::cout, std::cin, std::endl;
 
 void Command::kasih_makan(StorageOwner &so, PastureOwner &po) {
+    // Cek kosong atau tidak peternakannya
+    if(po.land.is_empty_matrix()) {
+        // Throw exception
+        cout << "Tidak ada hewan yang bisa diberi makan." << endl;
+        return;
+    }
+
     cout << "Pilih petak kandang yang akan ditinggali" << endl;
 
     auto loc = po.query_animal();
@@ -15,6 +22,7 @@ void Command::kasih_makan(StorageOwner &so, PastureOwner &po) {
     if (animal->get_animal_type() == AnimalType::Omnivore) {
         if (!so.is_exist_consumable()) {
             cout << "Tidak ada makanan yang dapat dimakan oleh hewan" << endl;
+            return;
         }
         cout << "Pilih pangan yang akan diberikan (produk hewan atau produk tumbuhan): " << endl; 
         food_loc = so.query_consumable();

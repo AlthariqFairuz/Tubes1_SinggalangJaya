@@ -117,6 +117,18 @@ class Matrix<T*> {
     bool is_empty(int row, int col) {
         return data[row][col] == 0;
     }
+
+    bool is_empty_matrix() {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (data[i][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     bool is_full() {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
@@ -127,7 +139,7 @@ class Matrix<T*> {
         }
         return true;
     }
-
+    
     void soft_erase(int row, int col) {
         if (data[row][col] != 0) {
             data[row][col] = 0;
