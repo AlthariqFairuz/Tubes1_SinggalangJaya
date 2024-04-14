@@ -29,7 +29,6 @@ void Command::makan(Person &p, StorageOwner &so) {
         cout << "Slot: ";
         cin >> slot;
         Coordinate loc = location(slot);
-        Product* selected_consumable = dynamic_cast<Product*>(so.storage(loc.row, loc.col));
 
         // Ambil slot kosong
         if (so.storage.is_empty(loc.row, loc.col) || loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= so.storage.get_rows() || loc.col < 0 || loc.col >= so.storage.get_cols()) {
@@ -37,14 +36,23 @@ void Command::makan(Person &p, StorageOwner &so) {
             cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl << "Silahkan masukan slot yang berisi makanan."<< endl;
             continue;
         }
-        // Ambil yang ga bisa dimakan
-        else if (so.storage(loc.row, loc.col)->get_item_type() != ItemType::Product || !selected_consumable->is_consumable()) {  
+
+        // Ambil yang ga bisa dimakan/bukan produk
+        else if (so.storage(loc.row, loc.col)->get_item_type() != ItemType::Product) {  
+            cout << endl;
+            cout << R"(Apa yang kamu lakukan??!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan.)" << endl;
+            continue;
+        }
+
+        // Ambil yang ga bisa dimakan/bukan consumable
+        else if (!dynamic_cast<Product*>(so.storage(loc.row, loc.col))->is_consumable()) {
             cout << endl;
             cout << R"(Apa yang kamu lakukan??!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan.)" << endl;
             continue;
         }
         // Valid
         else {
+            Product* selected_consumable = dynamic_cast<Product*>(so.storage(loc.row, loc.col));
             p.weight += selected_consumable->get_added_weight();
             so.storage.soft_erase(loc.row, loc.col);
             cout << endl;
