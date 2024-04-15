@@ -14,7 +14,31 @@ void CropFarmer::next() {
 }
 
 int CropFarmer::calculate_tax() {
-    return 0;
+    int kkp = storage.get_price_total()- 13;
+
+    double tax  = 0;
+
+    if(kkp<=6){
+        tax = 5/100;
+    }else if(kkp <= 25){
+        tax = 15/100;
+    }else if(kkp<=50){
+        tax = 25/100;
+    }else if(kkp<=500){
+        tax = 30/100;
+    }else{
+        tax = 35/100;
+    }
+
+    int val =0;
+    if(this->gold<(int)tax*kkp){
+        this->gold = 0;
+        val += gold;
+    }else{
+        this->gold-=(int)tax*kkp;
+        val += (int)tax*kkp;    
+    }
+    return val;
 }
 
 void CropFarmer::cetak_penyimpanan() const {

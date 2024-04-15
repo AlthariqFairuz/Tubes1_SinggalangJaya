@@ -20,7 +20,7 @@ class Person {
     Person(string username, int gold, int weight) :
     username(username), gold(gold), weight(weight) {}
 
-
+    virtual int calculate_tax() = 0;
     virtual PersonType get_person_type() = 0;
 };
 

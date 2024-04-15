@@ -46,7 +46,7 @@ class Matrix {
         }
         cout.flush();
     }
-
+    
     protected:
     int rows;
     int cols;
@@ -162,7 +162,7 @@ class Matrix<T*> {
         }
         cout.flush();
     }
-
+    
     protected:
     int rows;
     int cols;

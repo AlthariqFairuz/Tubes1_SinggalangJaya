@@ -22,7 +22,19 @@ class MatrixItem : public Matrix<Item*> {
     ~MatrixItem() {
 
     }
-
+    int get_price_total(){  
+        int total = 0;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(!is_empty(i,j)){
+                auto item=dynamic_cast<Item*>(data[i][j]);
+                
+                total+=item->get_price();
+            }
+            }
+        }
+        return total;
+    }
     void print() const {
         cout << "   ";
         for (int i = 0; i < cols; ++i) {
@@ -82,6 +94,8 @@ class StorageOwner {
     bool is_exist_consumable();
 
     bool is_exist_consumable(ProductType product_type);
+
+    
 
     MatrixItem storage;
     // private:
