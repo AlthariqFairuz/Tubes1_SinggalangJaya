@@ -7,10 +7,12 @@ using std::cout, std::cin, std::endl;
 
 void panen_animal_loc(int row, int col, StorageOwner &so, PastureOwner &po) {
     auto animal = po.land(row, col);
-    po.land.soft_erase(row, col);
+    string animal_name = animal->get_name();
+    po.land.hard_erase(row, col);
+
 
     for (auto &[code, product] : Product::product_config) {
-        if (product.origin == animal->get_name()) {
+        if (product.origin == animal_name) {
             so += product.to_item();
         }
     }
@@ -98,8 +100,18 @@ void Command::panen_peternak(StorageOwner &so, PastureOwner &po) {
     cout << "Pilih petak yang ingin dipanen:" << endl;
     for (int petak_count = 1; petak_count <= total_petak; ++petak_count) {
         cout << "Petak ke-" << petak_count << ": " << endl;
-        auto loc = po.query_specified_animal(code);
-        panen_animal_loc(loc.row, loc.col, so, po);
+        Coordinate selected_animal_location;
+        Animal *selected_animal;
+        while (true) {
+            selected_animal_location = po.query_specified_animal(code);
+            selected_animal = po.land(selected_animal_location.row, selected_animal_location.col);
+            if (selected_animal->ready_to_harvest()) {
+                break;
+            } else {
+                cout << "Hewan belum siap dipanen. Ulangi lagi" << endl;
+            }
+        }
+        panen_animal_loc(selected_animal_location.row, selected_animal_location.col, so, po);
     }
     cout << total_petak << " hewan " << Animal::animal_config.find(code)->second.name << " berhasil dipanen." << endl;
 }

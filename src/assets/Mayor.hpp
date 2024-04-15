@@ -4,9 +4,8 @@
 #include "Person.hpp"
 #include "owner/StorageOwner.hpp"
 #include "../abstracts/GameLogic.hpp"
+#include "../abstracts/Taxable.hpp"
 #include "../Game.hpp"
-
-#include "../commands/commands.hpp"
 
 #include <string>
 
@@ -23,6 +22,8 @@ class Mayor : public Person, public StorageOwner, public GameLogic {
 
     string get_username() const override;
     void next() override;
+
+    int calculate_tax() override;
 
     void cetak_penyimpanan() const override;
     void makan() override;

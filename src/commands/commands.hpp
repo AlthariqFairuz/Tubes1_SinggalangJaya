@@ -4,6 +4,7 @@
 #include "../abstracts/GameLogic.hpp"
 #include "../Game.hpp"
 
+// #include "../assets/Mayor.hpp"
 #include "../assets/Mayor.hpp"
 
 #include "../assets/owner/StorageOwner.hpp"

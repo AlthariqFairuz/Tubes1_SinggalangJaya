@@ -7,10 +7,11 @@ using std::cout, std::cin, std::endl;
 
 void panen_plant_loc(int row, int col, StorageOwner &so, CroplandOwner &co) {
     auto plant = co.land(row, col);
-    co.land.soft_erase(row, col);
+    string plant_name = plant->get_name();
+    co.land.hard_erase(row, col);
 
     for (auto &[code, product] : Product::product_config) {
-        if (product.origin == plant->get_name()) {
+        if (product.origin == plant_name) {
             so += product.to_item();
         }
     }
@@ -98,8 +99,18 @@ void Command::panen_petani(StorageOwner &so, CroplandOwner &co) {
     cout << "Pilih petak yang ingin dipanen:" << endl;
     for (int petak_count = 1; petak_count <= total_petak; ++petak_count) {
         cout << "Petak ke-" << petak_count << ": " << endl;
-        auto loc = co.query_specified_plant(code);
-        panen_plant_loc(loc.row, loc.col, so, co);
+        Coordinate selected_plant_location;
+        Plant *selected_plant;
+        while (true) {
+            selected_plant_location = co.query_specified_plant(code);
+            selected_plant = co.land(selected_plant_location.row, selected_plant_location.col);
+            if (selected_plant->ready_to_harvest()) {
+                break;
+            } else {
+                cout << "Tanaman belum siap dipanen. Ulangi lagi" << endl;
+            }
+        }
+        panen_plant_loc(selected_plant_location.row, selected_plant_location.col, so, co);
     }
     cout << total_petak << " tanaman " << Plant::plant_config.find(code)->second.name << " berhasil dipanen." << endl;
 }

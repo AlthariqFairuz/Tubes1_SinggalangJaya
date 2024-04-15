@@ -1,4 +1,5 @@
 #include "Mayor.hpp"
+#include "../commands/commands.hpp"
 
 PersonType Mayor::get_person_type() {
     return PersonType::Walikota;
@@ -10,6 +11,10 @@ string Mayor::get_username() const {
 
 void Mayor::next() {
     // Tidak perlu tambah umur tanaman karena tidak ada ladang
+}
+
+int Mayor::calculate_tax() {
+    return 0;
 }
 
 void Mayor::cetak_penyimpanan() const {
