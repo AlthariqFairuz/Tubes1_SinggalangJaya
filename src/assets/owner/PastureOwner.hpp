@@ -82,6 +82,8 @@ public:
 
     void set_at(int row, int col, Animal *animal);
 
+    int count_total_animals();
+
     Coordinate query_animal();
 
     Coordinate query_empty_slot();

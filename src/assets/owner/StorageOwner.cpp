@@ -46,6 +46,22 @@ int StorageOwner::count_empty_slots()
     return count;
 }
 
+int StorageOwner::count_total_items()
+{
+    int count = 0;
+    for (int i = 0; i < storage.get_rows(); ++i)
+    {
+        for (int j = 0; j < storage.get_cols(); ++j)
+        {
+            if (storage(i, j) != 0)
+            {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 bool StorageOwner::is_exist_specified_item(ItemType item_type)
 {
     for (int i = 0; i < storage.get_rows(); ++i)

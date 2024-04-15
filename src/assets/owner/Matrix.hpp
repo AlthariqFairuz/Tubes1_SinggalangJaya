@@ -221,8 +221,23 @@ public:
     Coordinate(const Coordinate &other) : row(other.row), col(other.col) {}
 
     bool operator==(const Coordinate &other);
-};
 
-Coordinate location(string loc);
+    string to_string() const
+    {
+        // Alphabet
+        string result;
+        result += (char)('A' + this->col);
+
+        // Numeric (2 digits)
+        if (this->row < 10)
+        {
+            result += "0";
+        }
+        result += std::to_string(this->row);
+
+        // Return
+        return result;
+    }
+};
 
 #endif

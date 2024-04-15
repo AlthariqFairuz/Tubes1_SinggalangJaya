@@ -5,14 +5,29 @@ LivestockFarmer::LivestockFarmer(string username, int gold, int weight) : Person
 
 LivestockFarmer::LivestockFarmer(string username, int gold, int weight, const StorageOwner &so, const PastureOwner &po) : Person(username, gold, weight), StorageOwner(so), PastureOwner(po) {}
 
+string LivestockFarmer::get_username() const
+{
+    return username;
+}
+
+int LivestockFarmer::get_gold() const
+{
+    return gold;
+}
+
+int LivestockFarmer::get_weight() const
+{
+    return weight;
+}
+
 PersonType LivestockFarmer::get_person_type()
 {
     return PersonType::Peternak;
 }
 
-string LivestockFarmer::get_username() const
+string LivestockFarmer::get_role() const
 {
-    return username;
+    return "Peternak";
 }
 
 void LivestockFarmer::next()

@@ -44,6 +44,7 @@ public:
 
     string get_name() override;
     int get_price() override;
+    int get_duration();
 
     virtual PlantType get_plant_type() = 0;
     virtual void increment_age();

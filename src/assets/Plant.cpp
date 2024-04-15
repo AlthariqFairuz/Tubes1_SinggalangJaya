@@ -50,6 +50,11 @@ int Plant::get_price()
     return Plant::plant_config.find(code)->second.price;
 }
 
+int Plant::get_duration()
+{
+    return duration;
+}
+
 void Plant::increment_age()
 {
     ++duration;

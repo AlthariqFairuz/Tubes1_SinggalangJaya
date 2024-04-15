@@ -24,6 +24,22 @@ void CroplandOwner::cetak_ladang() const
     land.print();
 }
 
+int CroplandOwner::count_total_plants()
+{
+    int count = 0;
+    for (int i = 0; i < land.get_rows(); ++i)
+    {
+        for (int j = 0; j < land.get_cols(); ++j)
+        {
+            if (land(i, j) != 0)
+            {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 void CroplandOwner::tambah_umur_ladang()
 {
     land.tambah_umur_ladang();

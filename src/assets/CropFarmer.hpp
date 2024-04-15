@@ -22,9 +22,12 @@ public:
     CropFarmer(string username, int gold, int weight);
     CropFarmer(string username, int gold, int weight, const StorageOwner &so, const CroplandOwner &co);
 
+    string get_username() const override;
+    int get_gold() const override;
+    int get_weight() const override;
     PersonType get_person_type() override;
+    string get_role() const override;
 
-    string get_username() const;
     void next() override;
 
     int calculate_tax() override;

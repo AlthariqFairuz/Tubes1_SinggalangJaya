@@ -18,9 +18,12 @@ public:
     Mayor(string username, int gold, int weight);
     Mayor(string username, int gold, int weight, const StorageOwner &so);
 
-    PersonType get_person_type() override;
-
     string get_username() const override;
+    int get_gold() const override;
+    int get_weight() const override;
+    PersonType get_person_type() override;
+    string get_role() const override;
+
     void next() override;
 
     void cetak_penyimpanan() const override;

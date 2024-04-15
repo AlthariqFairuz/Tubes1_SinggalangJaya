@@ -16,6 +16,22 @@ void PastureOwner::set_at(int row, int col, Animal *animal)
     land.set_at(row, col, animal);
 }
 
+int PastureOwner::count_total_animals()
+{
+    int count = 0;
+    for (int i = 0; i < land.get_rows(); ++i)
+    {
+        for (int j = 0; j < land.get_cols(); ++j)
+        {
+            if (land(i, j) != 0)
+            {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 Coordinate PastureOwner::query_animal()
 {
     while (true)

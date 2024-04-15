@@ -4,14 +4,29 @@ Mayor::Mayor(string username, int gold, int weight) : Person(username, gold, wei
 
 Mayor::Mayor(string username, int gold, int weight, const StorageOwner &so) : Person(username, gold, weight), StorageOwner(so) {}
 
+string Mayor::get_username() const
+{
+    return username;
+}
+
+int Mayor::get_gold() const
+{
+    return gold;
+}
+
+int Mayor::get_weight() const
+{
+    return weight;
+}
+
 PersonType Mayor::get_person_type()
 {
     return PersonType::Walikota;
 }
 
-string Mayor::get_username() const
+string Mayor::get_role() const
 {
-    return username;
+    return "Walikota";
 }
 
 void Mayor::next()

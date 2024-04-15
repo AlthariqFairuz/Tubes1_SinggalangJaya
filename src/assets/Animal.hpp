@@ -44,6 +44,7 @@ class Animal : public Item {
 
     string get_name() override;
     int get_price() override;
+    int get_weight();
 
     virtual AnimalType get_animal_type() = 0;
     virtual bool ready_to_harvest();

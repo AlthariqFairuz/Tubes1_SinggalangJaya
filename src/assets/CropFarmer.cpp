@@ -8,14 +8,29 @@ CropFarmer::CropFarmer(string username, int gold, int weight, const StorageOwner
 {
 }
 
+string CropFarmer::get_username() const
+{
+    return username;
+}
+
+int CropFarmer::get_gold() const
+{
+    return gold;
+}
+
+int CropFarmer::get_weight() const
+{
+    return weight;
+}
+
 PersonType CropFarmer::get_person_type()
 {
     return PersonType::Petani;
 }
 
-string CropFarmer::get_username() const
+string CropFarmer::get_role() const
 {
-    return username;
+    return "Petani";
 }
 
 void CropFarmer::next()

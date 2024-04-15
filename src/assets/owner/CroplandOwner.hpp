@@ -93,6 +93,8 @@ public:
 
     void set_at(int row, int col, Plant *plant);
 
+    int count_total_plants();
+
     void cetak_ladang() const;
     void tambah_umur_ladang();
     Coordinate query_empty_slot();
