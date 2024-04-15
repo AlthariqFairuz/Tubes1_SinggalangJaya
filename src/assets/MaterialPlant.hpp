@@ -3,9 +3,11 @@
 
 #include "Plant.hpp"
 
-class MaterialPlant : public Plant {
-    public:
+class MaterialPlant : public Plant
+{
+public:
     MaterialPlant(string _code);
+    MaterialPlant(string _code, int _duration);
 
     ItemType get_item_type() override;
     PlantType get_plant_type() override;

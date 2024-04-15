@@ -11,15 +11,14 @@
 #include <vector>
 #include <string>
 
-using std::vector;
 using std::string;
+using std::vector;
 
-class LivestockFarmer : public Person, public StorageOwner, public PastureOwner, public Taxable, public GameLogic {
-    public:
-    LivestockFarmer(string username, int gold, int weight) :
-    Person(username, gold, weight), StorageOwner(Game::storage_row, Game::storage_col), PastureOwner(Game::pasture_row, Game::pasture_col) {}
-    LivestockFarmer(string username, int gold, int weight, StorageOwner so, PastureOwner po) :
-    Person(username, gold, weight), StorageOwner(so), PastureOwner(po) {}
+class LivestockFarmer : public Person, public StorageOwner, public PastureOwner, public Taxable, public GameLogic
+{
+public:
+    LivestockFarmer(string username, int gold, int weight);
+    LivestockFarmer(string username, int gold, int weight, const StorageOwner &so, const PastureOwner &po);
 
     PersonType get_person_type() override;
 
@@ -37,6 +36,5 @@ class LivestockFarmer : public Person, public StorageOwner, public PastureOwner,
 
     void beli() override;
 };
-
 
 #endif
