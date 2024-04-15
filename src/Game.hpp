@@ -22,8 +22,7 @@ class Game {
     static int pasture_row, pasture_col;
     
     static set<GameLogic*, CompareUsername>::iterator current_player;
-    
-    private:
+
     static set<GameLogic*, CompareUsername> players;
 };
 
