@@ -50,7 +50,11 @@ void CropFarmer::next() {
 }
 
 int CropFarmer::calculate_tax() {
+<<<<<<< HEAD
     int kkp = std::max(gold + storage.get_total_price() + land.get_total_price() - 13, 0);
+=======
+    int kkp = std::max(storage.get_total_price() + land.get_total_price() - 13, 0);
+>>>>>>> 88862ef3b85862779227fae8cc8ebe5f4081ea58
     
     double tarif  = 0;
     if (kkp <= 6){
