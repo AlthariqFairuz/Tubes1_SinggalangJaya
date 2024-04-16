@@ -19,15 +19,15 @@ int CropFarmer::calculate_tax() {
     double tax  = 0;
 
     if(kkp<=6){
-        tax = 5/100;
+        tax = 5.0/100;
     }else if(kkp <= 25){
-        tax = 15/100;
+        tax = 15.0/100;
     }else if(kkp<=50){
-        tax = 25/100;
+        tax = 25.0/100;
     }else if(kkp<=500){
-        tax = 30/100;
+        tax = 30.0/100;
     }else{
-        tax = 35/100;
+        tax = 35.0/100;
     }
 
     int val =0;
