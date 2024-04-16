@@ -11,7 +11,6 @@
 
 #include "assets/Product.hpp"
 
-
 #include "assets/Recipe.hpp"
 
 #include "assets/CropFarmer.hpp"
@@ -32,9 +31,9 @@
 #include <cstdlib>
 
 using std::cout, std::cin, std::endl, std::flush;
-using std::string;
-using std::map;
 using std::ifstream, std::ofstream;
+using std::map;
+using std::string;
 using std::stringstream;
 
 // row = Vertical, col = Horizontal
@@ -44,27 +43,30 @@ int Game::storage_row, Game::storage_col;
 int Game::cropland_row, Game::cropland_col;
 int Game::pasture_row, Game::pasture_col;
 
-set<GameLogic*, CompareUsername> Game::players;
-set<GameLogic*, CompareUsername>::iterator Game::current_player;
+set<GameLogic *, CompareUsername> Game::players;
+set<GameLogic *, CompareUsername>::iterator Game::current_player;
 
-void Game::next() {
+void Game::next()
+{
     // Lakukan next sesuai dengan role:
     // - Jika current_player adalah petani, maka tumbuhan di ladang pertanian akan bertambah satu.
     (*current_player)->next();
 
     // Pindah ke player selanjutnya
     ++current_player;
-    if (current_player == players.end()) {
+    if (current_player == players.end())
+    {
         current_player = players.begin();
     }
     cout << "Sekarang giliran " << (*current_player)->get_username() << endl;
 }
 
-
-void Game::muat_konfigurasi() {
+void Game::muat_konfigurasi()
+{
     // konfigurasi/plant.txt
     ifstream plant_file("konfigurasi/plant.txt");
-    while (plant_file.good()) {
+    while (plant_file.good())
+    {
         int id;
         string code;
         string name;
@@ -74,7 +76,7 @@ void Game::muat_konfigurasi() {
 
         plant_file >> id >> code >> name >> type >> duration_to_harvest >> price;
         PlantConfig plant(id, code, name, type, duration_to_harvest, price);
-        
+
         // Plant::plant_config[code] = plant;
         Plant::plant_config.emplace(code, plant);
         // Plant::name_to_code[name] = code;
@@ -84,7 +86,8 @@ void Game::muat_konfigurasi() {
 
     // konfigurasi/animal.txt
     ifstream animal_file("konfigurasi/animal.txt");
-    while (animal_file.good()) {
+    while (animal_file.good())
+    {
         int id;
         string code;
         string name;
@@ -94,7 +97,7 @@ void Game::muat_konfigurasi() {
 
         animal_file >> id >> code >> name >> type >> weight_to_harvest >> price;
         AnimalConfig animal(id, code, name, type, weight_to_harvest, price);
-        
+
         // Animal::animal_config[code] = animal;
         Animal::animal_config.emplace(code, animal);
         // Animal::name_to_code[name] = code;
@@ -104,7 +107,8 @@ void Game::muat_konfigurasi() {
 
     // konfigurasi/product.txt
     ifstream product_file("konfigurasi/product.txt");
-    while (product_file.good()) {
+    while (product_file.good())
+    {
         int id;
         string code;
         string name;
@@ -115,7 +119,7 @@ void Game::muat_konfigurasi() {
 
         product_file >> id >> code >> name >> type >> origin >> weight_to_harvest >> price;
         ProductConfig product(id, code, name, type, origin, weight_to_harvest, price);
-        
+
         // Product::product_config[code] = product;
         Product::product_config.emplace(code, product);
         // Product::name_to_code[name] = code;
@@ -126,28 +130,31 @@ void Game::muat_konfigurasi() {
     // konfigurasi/recipe.txt
     ifstream recipe_file("konfigurasi/recipe.txt");
     string line;
-    while (getline(recipe_file, line)) {
+    while (getline(recipe_file, line))
+    {
         stringstream ss(line);
         Recipe r;
         ss >> r.id >> r.code >> r.name >> r.price;
-        
+
         string plant_name;
         int quantity;
-        while (ss >> plant_name >> quantity) {
+        while (ss >> plant_name >> quantity)
+        {
             // r.materials[Plant::name_to_code[plant_name]] = quantity;
             r.materials.emplace(Product::name_to_code[plant_name], quantity);
         }
-        
+
         // Recipe::recipe_config[r.code] = r;
         Recipe::recipe_config.emplace(r.code, r);
         // Recipe::name_to_code[r.name] = r.code;
         Recipe::name_to_code.emplace(r.name, r.code);
     }
     recipe_file.close();
-    
+
     // konfigurasi/misc.txt
     ifstream misc_file("konfigurasi/misc.txt");
-    while (misc_file.good()) {
+    while (misc_file.good())
+    {
         misc_file >> winning_money;
         misc_file >> winning_weight;
         misc_file >> storage_row >> storage_col;
@@ -155,7 +162,6 @@ void Game::muat_konfigurasi() {
         misc_file >> pasture_row >> pasture_col;
     }
     misc_file.close();
-
 }
 
 void Game::muat()
@@ -259,7 +265,6 @@ void Game::muat()
 
                 PlantConfig pc = plant_conf->second;
                 new_item = pc.to_item();
-
             }
             else if (Animal::name_to_code.find(item_name) != Animal::name_to_code.end())
             {
@@ -270,7 +275,6 @@ void Game::muat()
 
                 AnimalConfig ac = animal_conf->second;
                 new_item = ac.to_item();
-
             }
             else if (Product::name_to_code.find(item_name) != Product::name_to_code.end())
             {
@@ -280,13 +284,11 @@ void Game::muat()
 
                 ProductConfig pc = product_conf->second;
                 new_item = pc.to_item();
-
             }
             else if (Recipe::name_to_code.find(item_name) != Recipe::name_to_code.end())
             {
                 auto recipe_code = Recipe::name_to_code.find(item_name);
                 auto recipe_conf = Recipe::recipe_config.find(recipe_code->second);
-
 
                 Recipe r = recipe_conf->second;
                 new_item = r.to_item();
@@ -370,7 +372,6 @@ void Game::muat()
             int total_animals;
             file >> total_animals;
 
-
             // Animal state
             for (int j = 0; j < total_animals; j++)
             {
@@ -435,7 +436,6 @@ void Game::muat()
             cout << "File muat tidak valid karena ada role yang tidak dikenal." << endl;
             std::exit(0);
         }
-
     }
 
     // Shop
@@ -451,7 +451,8 @@ void Game::muat()
         file >> name >> stock;
 
         // Check if name is a plant or an animal (unlimited stocks)
-        if (Plant::name_to_code.find(name) != Plant::name_to_code.end() || Animal::name_to_code.find(name) != Animal::name_to_code.end()) {
+        if (Plant::name_to_code.find(name) != Plant::name_to_code.end() || Animal::name_to_code.find(name) != Animal::name_to_code.end())
+        {
             cout << "Warning: Hewan dan tumbuhan memiliki jumlah tak hingga di toko sehingga tidak perlu ada di file state bagian toko" << endl;
             continue;
         }
@@ -481,7 +482,6 @@ void Game::muat()
             {
                 // cout << "CATATAN: Toko memiliki tanaman yang berjumlah tak hingga sehingga tidak perlu dicatat di file muat bagian toko" << endl;
                 // continue;
-
 
                 // Plant
                 // PlantConfig pc = Plant::plant_config[Plant::name_to_code[name]];
@@ -518,7 +518,6 @@ void Game::muat()
     Game::current_player = Game::players.begin();
     cout << "Berhasil memuat state dari berkas!" << endl;
 }
-
 
 void Game::simpan()
 {
@@ -637,16 +636,49 @@ void Game::simpan()
     // Write shop state
     for (auto shop_item = Shop::other_offers.begin(); shop_item != Shop::other_offers.end(); shop_item++)
     {
-        // Item name, stock
-        string name = shop_item->first;
+        // Item code, stock
+        string code = shop_item->first;
         int stock = shop_item->second.stock;
+
+        // Get name
+
+        // Check if code is from animal
+        string name;
+        if (Animal::animal_config.find(code) != Animal::animal_config.end())
+        {
+            // Animal
+            name = Animal::animal_config[code].name;
+        }
+        else if (Plant::plant_config.find(code) != Plant::plant_config.end())
+        {
+            // Plant
+            name = Plant::plant_config[code].name;
+        }
+        else if (Product::product_config.find(code) != Product::product_config.end())
+        {
+            // Product
+            name = Product::product_config[code].name;
+        }
+        else if (Recipe::recipe_config.find(code) != Recipe::recipe_config.end())
+        {
+            // Recipe
+            name = Recipe::recipe_config[code].name;
+        }
+        else
+        {
+            // Invalid code
+            cout << "File muat tidak valid karena ada barang yang tidak dikenal kodenya." << endl;
+            std::exit(0);
+        }
+
         file << name << " " << stock << endl;
     }
 }
 
-
-void Game::exit() {
-    while (players.empty()) {
+void Game::exit()
+{
+    while (players.empty())
+    {
         auto it = players.begin();
         delete *it;
         players.erase(it);
