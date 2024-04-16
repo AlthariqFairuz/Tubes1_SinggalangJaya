@@ -3,9 +3,8 @@
 
 #include "Plant.hpp"
 
-class FruitPlant : public Plant
-{
-public:
+class FruitPlant : public Plant {
+    public:
     FruitPlant(string _code);
     FruitPlant(string _code, int _duration);
 

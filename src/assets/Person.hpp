@@ -5,16 +5,14 @@
 
 using std::string;
 
-enum class PersonType
-{
+enum class PersonType {
     Petani,
     Peternak,
     Walikota,
 };
 
-class Person
-{
-public:
+class Person {
+    public:
     string username;
     int gold;
     int weight;
@@ -27,6 +25,7 @@ public:
     virtual int get_weight() const = 0;
     virtual PersonType get_person_type() = 0;
     virtual string get_role() const = 0;
+
     
     virtual int calculate_tax() = 0;
 };

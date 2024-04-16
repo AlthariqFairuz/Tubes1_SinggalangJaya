@@ -2,6 +2,7 @@
 #include "../commands/commands.hpp"
 #include<cmath>
 
+
 void LivestockFarmer::set_storage(StorageOwner &so) {
     for (int i = 0; i < storage.get_rows(); ++i) {
         for (int j = 0; j < storage.get_cols(); ++j) {
@@ -73,39 +74,34 @@ int LivestockFarmer::calculate_tax() {
     return val;
 }
 
-void LivestockFarmer::cetak_penyimpanan() const
-{
+void LivestockFarmer::cetak_penyimpanan() const {
     Command::cetak_penyimpanan(*dynamic_cast<StorageOwner const *>(this));
 }
 
-void LivestockFarmer::cetak_peternakan() const
-{
+
+void LivestockFarmer::cetak_peternakan() const {
     Command::cetak_peternakan(*dynamic_cast<PastureOwner const *>(this));
 }
 
-void LivestockFarmer::makan()
-{
-    Command::makan(*dynamic_cast<Person *>(this), *dynamic_cast<StorageOwner *>(this));
+void LivestockFarmer::makan() {
+    Command::makan(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }
 
-void LivestockFarmer::ternak()
-{
-    Command::ternak(*dynamic_cast<StorageOwner *>(this), *dynamic_cast<PastureOwner *>(this));
+
+void LivestockFarmer::ternak() {
+    Command::ternak(*dynamic_cast<StorageOwner*>(this), *dynamic_cast<PastureOwner*>(this));
 }
 
-void LivestockFarmer::kasih_makan()
-{
-    Command::kasih_makan(*dynamic_cast<StorageOwner *>(this), *dynamic_cast<PastureOwner *>(this));
+void LivestockFarmer::kasih_makan() {
+    Command::kasih_makan(*dynamic_cast<StorageOwner*>(this), *dynamic_cast<PastureOwner*>(this));
 }
 
-void LivestockFarmer::panen()
-{
-    Command::panen_peternak(*dynamic_cast<StorageOwner *>(this), *dynamic_cast<PastureOwner *>(this));
+void LivestockFarmer::panen() {
+    Command::panen_peternak(*dynamic_cast<StorageOwner*>(this), *dynamic_cast<PastureOwner*>(this));
 }
 
-void LivestockFarmer::beli()
-{
-    Command::beli(*dynamic_cast<Person *>(this), *dynamic_cast<StorageOwner *>(this));
+void LivestockFarmer::beli() {
+    Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }
 
 void LivestockFarmer::jual() {

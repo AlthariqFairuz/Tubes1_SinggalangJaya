@@ -3,24 +3,31 @@
 
 using std::cout, std::cin, std::endl;
 
-CroplandOwner::CroplandOwner(CroplandOwner &other) : CroplandOwner(other.land.get_rows(), other.land.get_cols()) {
-    for (int i = 0; i < land.get_rows(); ++i) {
-        for (int j = 0; j < land.get_cols(); ++j) {
+CroplandOwner::CroplandOwner(CroplandOwner &other) : CroplandOwner(other.land.get_rows(), other.land.get_cols())
+{
+    for (int i = 0; i < land.get_rows(); ++i)
+    {
+        for (int j = 0; j < land.get_cols(); ++j)
+        {
             land(i, j) = other.land(i, j);
         }
     }
 }
 
-void CroplandOwner::operator=(CroplandOwner &other) {
+void CroplandOwner::operator=(CroplandOwner &other)
+{
     cout << "calling croplandowner = operator" << endl;
-    for (int i = 0; i < land.get_rows(); ++i) {
-        for (int j = 0; j < land.get_cols(); ++j) {
+    for (int i = 0; i < land.get_rows(); ++i)
+    {
+        for (int j = 0; j < land.get_cols(); ++j)
+        {
             land(i, j) = other.land(i, j);
         }
     }
 }
 
-void CroplandOwner::set_at(int row, int col, Plant *plant) {
+void CroplandOwner::set_at(int row, int col, Plant *plant)
+{
     land.set_at(row, col, plant);
 }
 
@@ -30,22 +37,6 @@ void CroplandOwner::cetak_ladang() const
     cout << "Ladang" << endl;
     cout << "======" << endl;
     land.print();
-}
-
-int CroplandOwner::count_total_plants()
-{
-    int count = 0;
-    for (int i = 0; i < land.get_rows(); ++i)
-    {
-        for (int j = 0; j < land.get_cols(); ++j)
-        {
-            if (land(i, j) != 0)
-            {
-                ++count;
-            }
-        }
-    }
-    return count;
 }
 
 void CroplandOwner::tambah_umur_ladang()

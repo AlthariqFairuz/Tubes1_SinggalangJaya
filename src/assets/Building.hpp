@@ -3,9 +3,8 @@
 
 #include "Item.hpp"
 
-class Building : public Item
-{
-public:
+class Building : public Item {
+    public:
     Building(string _code);
 
     ItemType get_item_type() override;

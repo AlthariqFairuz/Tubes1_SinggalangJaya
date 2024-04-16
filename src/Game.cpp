@@ -13,12 +13,6 @@
 
 
 #include "assets/Recipe.hpp"
-#include "assets/MaterialPlant.hpp"
-#include "assets/FruitPlant.hpp"
-#include "assets/CarnivoreAnimal.hpp"
-#include "assets/HerbivoreAnimal.hpp"
-#include "assets/OmnivoreAnimal.hpp"
-#include "assets/Building.hpp"
 
 #include "assets/CropFarmer.hpp"
 #include "assets/LivestockFarmer.hpp"
@@ -50,30 +44,27 @@ int Game::storage_row, Game::storage_col;
 int Game::cropland_row, Game::cropland_col;
 int Game::pasture_row, Game::pasture_col;
 
-set<GameLogic *, CompareUsername> Game::players;
-set<GameLogic *, CompareUsername>::iterator Game::current_player;
+set<GameLogic*, CompareUsername> Game::players;
+set<GameLogic*, CompareUsername>::iterator Game::current_player;
 
-void Game::next()
-{
+void Game::next() {
     // Lakukan next sesuai dengan role:
     // - Jika current_player adalah petani, maka tumbuhan di ladang pertanian akan bertambah satu.
     (*current_player)->next();
 
     // Pindah ke player selanjutnya
     ++current_player;
-    if (current_player == players.end())
-    {
+    if (current_player == players.end()) {
         current_player = players.begin();
     }
     cout << "Sekarang giliran " << (*current_player)->get_username() << endl;
 }
 
-void Game::muat_konfigurasi()
-{
+
+void Game::muat_konfigurasi() {
     // konfigurasi/plant.txt
     ifstream plant_file("konfigurasi/plant.txt");
-    while (plant_file.good())
-    {
+    while (plant_file.good()) {
         int id;
         string code;
         string name;
@@ -91,21 +82,9 @@ void Game::muat_konfigurasi()
     }
     plant_file.close();
 
-    // DEBUG
-    auto test = Plant::name_to_code.find("ALOE_WOOD");
-    if (test != Plant::name_to_code.end())
-    {
-        cout << "DEBUG: " << test->first << " AND " << test->second << endl;
-    }
-    else
-    {
-        cout << "DEBUG: NOT FOUND" << endl;
-    }
-
     // konfigurasi/animal.txt
     ifstream animal_file("konfigurasi/animal.txt");
-    while (animal_file.good())
-    {
+    while (animal_file.good()) {
         int id;
         string code;
         string name;
@@ -125,8 +104,7 @@ void Game::muat_konfigurasi()
 
     // konfigurasi/product.txt
     ifstream product_file("konfigurasi/product.txt");
-    while (product_file.good())
-    {
+    while (product_file.good()) {
         int id;
         string code;
         string name;
@@ -148,12 +126,11 @@ void Game::muat_konfigurasi()
     // konfigurasi/recipe.txt
     ifstream recipe_file("konfigurasi/recipe.txt");
     string line;
-    while (getline(recipe_file, line))
-    {
+    while (getline(recipe_file, line)) {
         stringstream ss(line);
         Recipe r;
         ss >> r.id >> r.code >> r.name >> r.price;
-
+        
         string plant_name;
         int quantity;
         while (ss >> plant_name >> quantity) {
@@ -167,11 +144,10 @@ void Game::muat_konfigurasi()
         Recipe::name_to_code.emplace(r.name, r.code);
     }
     recipe_file.close();
-
+    
     // konfigurasi/misc.txt
     ifstream misc_file("konfigurasi/misc.txt");
-    while (misc_file.good())
-    {
+    while (misc_file.good()) {
         misc_file >> winning_money;
         misc_file >> winning_weight;
         misc_file >> storage_row >> storage_col;
@@ -179,6 +155,7 @@ void Game::muat_konfigurasi()
         misc_file >> pasture_row >> pasture_col;
     }
     misc_file.close();
+
 }
 
 void Game::muat()
@@ -205,6 +182,7 @@ void Game::muat()
 
         // Message
         cout << "State tidak dimuat. Game dimulai dari awal menggunakan default state sesuai spesifikasi." << endl;
+
         // Create players
         CropFarmer *petani = new CropFarmer("Petani1", 50, 40);
         LivestockFarmer *peternak = new LivestockFarmer("Peternak1", 50, 40);
@@ -255,9 +233,7 @@ void Game::muat()
         // Username, role, weight, gold
         string username, role;
         int weight, gold;
-
         file >> username >> role >> weight >> gold;
-
 
         // Jumlah item di inventory
         int total_inventory_items;
@@ -283,6 +259,7 @@ void Game::muat()
 
                 PlantConfig pc = plant_conf->second;
                 new_item = pc.to_item();
+
             }
             else if (Animal::name_to_code.find(item_name) != Animal::name_to_code.end())
             {
@@ -293,6 +270,7 @@ void Game::muat()
 
                 AnimalConfig ac = animal_conf->second;
                 new_item = ac.to_item();
+
             }
             else if (Product::name_to_code.find(item_name) != Product::name_to_code.end())
             {
@@ -302,6 +280,7 @@ void Game::muat()
 
                 ProductConfig pc = product_conf->second;
                 new_item = pc.to_item();
+
             }
             else if (Recipe::name_to_code.find(item_name) != Recipe::name_to_code.end())
             {
@@ -524,6 +503,7 @@ void Game::muat()
                 cout << "File muat tidak valid karena ada barang yang tidak dikenal kodenya." << endl;
                 std::exit(0);
             }
+
             // Add item to vector
             items.push_back(newItem);
         }
@@ -664,134 +644,9 @@ void Game::simpan()
     }
 }
 
-void Game::simpan()
-{
-    // Read file & validate location
-    string file_location;
-    cout << "Masukkan lokasi berkas state: " << flush;
-    cin >> file_location;
-    ofstream file;
-    while (!file.is_open())
-    {
-        cout << "File tidak dapat dibuka. Mohon masukkan lokasi berkas state yang valid." << endl;
-        cout << "Masukkan lokasi berkas state: " << flush;
-        cin >> file_location;
-        file.open(file_location);
-    }
 
-    // Write player count
-    file << players.size() << endl;
-
-    // Write player state
-    for (auto player = players.begin(); player != players.end(); player++)
-    {
-        // Username, role, weight, gulden
-        Person *user = dynamic_cast<Person *>(*player);
-        string username = (user)->get_username();
-        int gold = (user)->get_gold();
-        int weight = (user)->get_weight();
-        string role = (user)->get_role();
-        file << username << " " << role << " " << weight << " " << gold << endl;
-
-        // Inventory items
-        StorageOwner *so = dynamic_cast<StorageOwner *>(*player);
-        int total_items = so->count_total_items();
-        file << total_items << endl;
-        for (int i = 0; i < Game::storage_row; i++)
-        {
-            for (int j = 0; j < Game::storage_col; j++)
-            {
-                if (so->storage(i, j))
-                {
-                    Item *item = so->storage(i, j);
-                    string item_name = item->get_name();
-                    file << item_name << endl;
-                }
-            }
-        }
-
-        // Role specific state
-        if (role == "Petani")
-        {
-            // Cropland state
-            CroplandOwner *co = dynamic_cast<CroplandOwner *>(*player);
-
-            // Jumlah tanaman di ladang
-            int total_plants = co->count_total_plants();
-            file << total_plants << endl;
-
-            // Plant data
-            for (int i = 0; i < Game::cropland_row; i++)
-            {
-                for (int j = 0; j < Game::cropland_col; j++)
-                {
-                    if (co->land(i, j))
-                    {
-                        Plant *plant = co->land(i, j);
-                        string name = plant->get_name();
-                        int age = plant->get_duration();
-                        Coordinate cords(i, j);
-                        string loc = cords.to_string();
-                        file << loc << " " << name << " " << age << endl;
-                    }
-                }
-            }
-        }
-        else if (role == "Peternak")
-        {
-            // Pasture state
-            PastureOwner *po = dynamic_cast<PastureOwner *>(*player);
-
-            // Jumlah hewan di peternakan
-            int total_animals = po->count_total_animals();
-            file << total_animals << endl;
-
-            // Animal data
-            for (int i = 0; i < Game::pasture_row; i++)
-            {
-                for (int j = 0; j < Game::pasture_col; j++)
-                {
-                    if (po->land(i, j))
-                    {
-                        Animal *animal = po->land(i, j);
-                        string name = animal->get_name();
-                        int weight = animal->get_weight();
-                        Coordinate cords(i, j);
-                        string loc = cords.to_string();
-                        file << loc << " " << name << " " << weight << endl;
-                    }
-                }
-            }
-        }
-        else if (role == "Walikota")
-        {
-            // Do nothing
-        }
-        else
-        {
-            cout << "File muat tidak valid karena ada role yang tidak dikenal." << endl;
-            std::exit(0);
-        }
-    }
-
-    // Shop state
-    int total_item_types = Shop::other_offers.size();
-    file << total_item_types << endl;
-
-    // Write shop state
-    for (auto shop_item = Shop::other_offers.begin(); shop_item != Shop::other_offers.end(); shop_item++)
-    {
-        // Item name, stock
-        string name = shop_item->first;
-        int stock = shop_item->second.stock;
-        file << name << " " << stock << endl;
-    }
-}
-
-void Game::exit()
-{
-    while (players.empty())
-    {
+void Game::exit() {
+    while (players.empty()) {
         auto it = players.begin();
         delete *it;
         players.erase(it);

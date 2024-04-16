@@ -7,4 +7,3 @@ ItemType CarnivoreAnimal::get_item_type() {
 AnimalType CarnivoreAnimal::get_animal_type() {
     return AnimalType::Carnivore;
 }
-

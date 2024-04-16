@@ -11,8 +11,8 @@
 #include <vector>
 #include <string>
 
-using std::string;
 using std::vector;
+using std::string;
 
 class LivestockFarmer : public Person, public StorageOwner, public PastureOwner, public Taxable, public GameLogic {
     public:
@@ -33,6 +33,7 @@ class LivestockFarmer : public Person, public StorageOwner, public PastureOwner,
     PersonType get_person_type() override;
     string get_role() const override;
 
+    
     void next() override;
 
     int calculate_tax() override;
@@ -47,5 +48,6 @@ class LivestockFarmer : public Person, public StorageOwner, public PastureOwner,
     void beli() override;
     void jual() override;
 };
+
 
 #endif

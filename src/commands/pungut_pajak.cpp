@@ -38,4 +38,3 @@ void Command::pungut_pajak(Mayor &m, set<GameLogic*, CompareUsername> &game) {
     cout <<"Gunakan dengan baik dan jangan dikorupsi ya!"<<endl;
     cout << "BTW, mcLaren mu warna apa bosss"<<endl;
 }
-

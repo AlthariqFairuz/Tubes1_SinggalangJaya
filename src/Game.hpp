@@ -6,15 +6,14 @@
 
 using std::set;
 
-class Game
-{
-public:
+class Game {
+    public:
     static void muat_konfigurasi();
     static void muat();
     static void next();
     static void simpan();
     static void exit();
-
+    
     // row = Vertical, col = Horizontal
     static int winning_money;
     static int winning_weight;
