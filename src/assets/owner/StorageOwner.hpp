@@ -89,6 +89,8 @@ class StorageOwner {
 
     int count_items(string code);
 
+    // int count_total_items();
+
     bool is_exist_specified_item(ItemType item_type);
 
     Coordinate query_empty_slot();

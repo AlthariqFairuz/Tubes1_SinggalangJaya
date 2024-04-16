@@ -23,6 +23,10 @@ int Animal::get_price() {
     return Animal::animal_config.find(code)->second.price;
 }
 
+int Animal::get_weight() {
+    return weight;
+}
+
 
 Item* AnimalConfig::to_item() {
     if (type == "HERBIVORE") {

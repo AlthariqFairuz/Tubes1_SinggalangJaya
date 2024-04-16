@@ -18,13 +18,28 @@ void CropFarmer::set_crop_land(CroplandOwner &co) {
     }
 }
 
+string CropFarmer::get_username() const {
+    return username;
+}
+
+int CropFarmer::get_gold() const {
+    return gold;
+}
+
+int CropFarmer::get_weight() const {
+    return weight;
+}
+
 PersonType CropFarmer::get_person_type() {
     return PersonType::Petani;
 }
 
-string CropFarmer::get_username() const {
-    return username;
+string CropFarmer::get_role() const {
+    return "Petani";
 }
+
+
+
 
 void CropFarmer::next() {
     tambah_umur_ladang();

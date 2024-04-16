@@ -20,14 +20,26 @@ void LivestockFarmer::set_pasture_land(PastureOwner &po) {
 }
 
 
+string LivestockFarmer::get_username() const {
+    return username;
+}
+
+int LivestockFarmer::get_gold() const {
+    return gold;
+}
+
+int LivestockFarmer::get_weight() const {
+    return weight;
+}
 
 PersonType LivestockFarmer::get_person_type() {
     return PersonType::Peternak;
 }
 
-string LivestockFarmer::get_username() const {
-    return username;
+string LivestockFarmer::get_role() const {
+    return "Peternak";
 }
+
 
 void LivestockFarmer::next() {
     // Tidak perlu tambah umur tanaman karena tidak ada ladang

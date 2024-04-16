@@ -23,9 +23,15 @@ class Mayor : public Person, public StorageOwner, public GameLogic {
     // void set_crop_land(CroplandOwner &co);
 
     void pungut_pajak() override;
-    PersonType get_person_type() override;
 
+    // PersonType get_person_type() override;
+    // string get_username() const override;
     string get_username() const override;
+    int get_gold() const override;
+    int get_weight() const override;
+    PersonType get_person_type() override;
+    string get_role() const override;
+    
     void next() override;
 
     int calculate_tax() override;

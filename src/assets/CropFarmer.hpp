@@ -27,9 +27,15 @@ class CropFarmer : public Person, public StorageOwner, public CroplandOwner, pub
     // void set_pasture_land(PastureOwner &po);
     void set_crop_land(CroplandOwner &co);
 
+    // PersonType get_person_type() override;
+    // string get_username() const;
+    string get_username() const override;
+    int get_gold() const override;
+    int get_weight() const override;
     PersonType get_person_type() override;
+    string get_role() const override;
 
-    string get_username() const;
+
     void next() override;
 
     int calculate_tax() override;
