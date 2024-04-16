@@ -14,7 +14,7 @@
 class Command {
     public:
     static void cetak_penyimpanan(const StorageOwner &so);
-    static void pungut_pajak(Mayor &m, set<GameLogic*, CompareUsername> &game);
+    static void pungut_pajak(Mayor &m);
     static void cetak_ladang(const CroplandOwner &co);
     static void cetak_peternakan(const PastureOwner &po);
     static void tanam(StorageOwner &so, CroplandOwner &co);
