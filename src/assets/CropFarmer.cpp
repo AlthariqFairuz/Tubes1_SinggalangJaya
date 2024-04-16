@@ -1,5 +1,5 @@
 #include "CropFarmer.hpp"
-
+#include<cmath>
 PersonType CropFarmer::get_person_type() {
     return PersonType::Petani;
 }
@@ -14,7 +14,7 @@ void CropFarmer::next() {
 }
 
 int CropFarmer::calculate_tax() {
-    int kkp = storage.get_price_total()- 13;
+    double kkp = double(storage.get_price_total()- 13);
 
     double tax  = 0;
 
@@ -31,12 +31,13 @@ int CropFarmer::calculate_tax() {
     }
 
     int val =0;
-    if(this->gold<(int)tax*kkp){
+    int pre_tax = round(tax*kkp);
+    if(this->gold<pre_tax){
         this->gold = 0;
         val += gold;
     }else{
-        this->gold-=(int)tax*kkp;
-        val += (int)tax*kkp;    
+        this->gold-=pre_tax;
+        val += pre_tax;    
     }
     return val;
 }
