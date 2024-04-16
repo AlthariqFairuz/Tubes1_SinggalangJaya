@@ -23,12 +23,15 @@
 
 #include "assets/Shop.hpp"
 
+#include "utils/directory-check.hpp"
+
 #include <iostream>
 #include <string>
 #include <map>
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
+#include <filesystem>
 
 using std::cout, std::cin, std::endl, std::flush;
 using std::ifstream, std::ofstream;
@@ -525,14 +528,17 @@ void Game::simpan()
     string file_location;
     cout << "Masukkan lokasi berkas state: " << flush;
     cin >> file_location;
-    ofstream file;
-    while (!file.is_open())
+
+    // Gak boleh buat folder, tapi boleh buat/nimpa file (directory harus valid)
+    while (!isParentDirValid(file_location))
     {
-        cout << "File tidak dapat dibuka. Mohon masukkan lokasi berkas state yang valid." << endl;
+        cout << "Lokasi berkas tidak valid. Mohon masukkan lokasi berkas state yang valid." << endl;
         cout << "Masukkan lokasi berkas state: " << flush;
         cin >> file_location;
-        file.open(file_location);
     }
+
+    ofstream file;
+    file.open(file_location);
 
     // Write player count
     file << players.size() << endl;
