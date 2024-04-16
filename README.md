@@ -23,10 +23,10 @@ make all
 
 ## Anggota kelompok
 Kelompok Singgalang Jaya
-13522011 - Dewantoro Triatmojo
-13522027 - Muhammad Al Thariq Fairuz
-13522067 - Randy Verdian
-13522079 - Emery Fathan Zwageri 
-13522109 - Azmi Mahmud Bazeid
+1. 13522011 - Dewantoro Triatmojo
+2. 13522027 - Muhammad Al Thariq Fairuz
+3. 13522067 - Randy Verdian
+4. 13522079 - Emery Fathan Zwageri 
+5. 13522109 - Azmi Mahmud Bazeid
 
 
