@@ -1,6 +1,6 @@
 #include "LivestockFarmer.hpp"
 #include "../commands/commands.hpp"
-
+#include<cmath>
 PersonType LivestockFarmer::get_person_type() {
     return PersonType::Peternak;
 }
@@ -14,7 +14,7 @@ void LivestockFarmer::next() {
 }
 
 int LivestockFarmer::calculate_tax() {
-    int kkp = storage.get_price_total()- 11;
+    double kkp = double(storage.get_price_total()- 11);
 
     double tax  = 0;
 
@@ -31,13 +31,13 @@ int LivestockFarmer::calculate_tax() {
     }
 
     int val =0;
-    if(this->gold<(int)tax*kkp){
-        val += gold;
+    int pre_tax = round(tax*kkp);
+    if(this->gold<pre_tax){
         this->gold = 0;
-        
+        val += gold;
     }else{
-        this->gold-=(int)tax*kkp;
-        val += (int)tax*kkp;    
+        this->gold-=pre_tax;
+        val += pre_tax;    
     }
     return val;
 }

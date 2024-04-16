@@ -23,7 +23,7 @@ class Game {
     
     static set<GameLogic*, CompareUsername>::iterator current_player;
     
-    private:
+    
     static set<GameLogic*, CompareUsername> players;
 };
 
