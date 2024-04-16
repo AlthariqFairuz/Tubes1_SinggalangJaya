@@ -1,5 +1,8 @@
 #include "CropFarmer.hpp"
 #include <cmath>
+#include <algorithm>
+
+using std::max, std::min;
 
 
 void CropFarmer::set_storage(StorageOwner &so) {
@@ -47,32 +50,26 @@ void CropFarmer::next() {
 }
 
 int CropFarmer::calculate_tax() {
-    double kkp = double(storage.get_price_total()- 13);
-
-    double tax  = 0;
-
-    if(kkp<=6){
-        tax = 5/100;
-    }else if(kkp <= 25){
-        tax = 15/100;
-    }else if(kkp<=50){
-        tax = 25/100;
-    }else if(kkp<=500){
-        tax = 30/100;
-    }else{
-        tax = 35/100;
+    int kkp = std::max(storage.get_total_price() + land.get_total_price() - 13, 0);
+    
+    double tarif  = 0;
+    if (kkp <= 6){
+        tarif = 5.0 / 100;
+    } else if (kkp <= 25){
+        tarif = 15.0 / 100;
+    } else if (kkp <= 50){
+        tarif = 25.0 / 100;
+    } else if (kkp <= 500){
+        tarif = 30.0 / 100;
+    } else {
+        tarif = 35.0 / 100;
     }
 
-    int val =0;
-    int pre_tax = round(tax*kkp);
-    if(this->gold<pre_tax){
-        this->gold = 0;
-        val += gold;
-    }else{
-        this->gold-=pre_tax;
-        val += pre_tax;    
-    }
-    return val;
+    int tax = round(tarif * kkp);
+    int paid = min(gold, tax);
+    gold -= paid;
+
+    return paid;
 }
 
 void CropFarmer::cetak_penyimpanan() const {

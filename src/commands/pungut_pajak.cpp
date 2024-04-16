@@ -1,29 +1,27 @@
 #include "commands.hpp"
+#include "../Game.hpp"
 #include "../abstracts/Taxable.hpp"
 #include <map>
+#include <tuple>
 
 using std::cout;
 using std::get;
+using std::tuple;
 
-void Command::pungut_pajak(Mayor &m, set<GameLogic*, CompareUsername> &game) {
+
+void Command::pungut_pajak(Mayor &m) {
     cout << "Cring cring cring...\n";
     cout << "Pajak sudah dipungut!";
     
-    set<std::tuple<int,string,string>> daftar;
+    set<tuple<int, string, string>> daftar;
+    
     int total = 0;
-    for (auto i = game.begin();i!=game.end();i++){
+    for (auto i = Game::players.begin(); i != Game::players.end(); ++i){
         auto person =  dynamic_cast<Person*>(*i);
         if (person->get_person_type() != PersonType::Walikota){
             int kkp_taxed = person->calculate_tax();
-            PersonType temp = person->get_person_type();
-            string type;
-            if (temp == PersonType::Petani){
-                type = "Petani";
-            } else if (temp == PersonType::Peternak){
-                type = "Peternak";
-            }
-            daftar.insert({kkp_taxed,person->username,type});
-            m.gold+=kkp_taxed;
+            daftar.insert({kkp_taxed, person->username, person->get_role()});
+            m.gold += kkp_taxed;
             total += kkp_taxed;
         }
     }
@@ -34,7 +32,7 @@ void Command::pungut_pajak(Mayor &m, set<GameLogic*, CompareUsername> &game) {
         j++;
     }
 
-    cout << "Negara mendapatkan pemasukan sebesar " << total << "gulden"<<endl;
-    cout <<"Gunakan dengan baik dan jangan dikorupsi ya!"<<endl;
+    cout << "Negara mendapatkan pemasukan sebesar " << total << " gulden" << endl;
+    cout << "Gunakan dengan baik dan jangan dikorupsi ya!"<<endl;
     cout << "BTW, mcLaren mu warna apa bosss"<<endl;
 }

@@ -21,6 +21,18 @@ class MatrixPlant : public Matrix<Plant*> {
 
     }
 
+    int get_total_price() {
+        int total = 0;
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < cols; j++){
+                if (data[i][j] != 0){
+                    total += data[i][j]->get_price();
+                }
+            }
+        }
+        return total;
+    }
+
     void print() const {
         cout << "   ";
         for (int i = 0; i < cols; ++i) {
