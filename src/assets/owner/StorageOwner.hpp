@@ -9,18 +9,22 @@
 #include "Matrix.hpp"
 
 using std::cout, std::endl;
-using std::vector;
 using std::string;
+using std::vector;
 
-class MatrixItem : public Matrix<Item*> {
-    public:
-
-    MatrixItem(int rows, int cols) : Matrix<Item*>(rows, cols) {
-
+class MatrixItem : public Matrix<Item *>
+{
+public:
+    MatrixItem(int rows, int cols) : Matrix<Item *>(rows, cols)
+    {
     }
 
-    ~MatrixItem() {
+    MatrixItem(const MatrixItem &other) : Matrix<Item *>(other)
+    {
+    }
 
+    ~MatrixItem()
+    {
     }
     int get_price_total(){  
         int total = 0;
@@ -37,29 +41,36 @@ class MatrixItem : public Matrix<Item*> {
     }
     void print() const {
         cout << "   ";
-        for (int i = 0; i < cols; ++i) {
+        for (int i = 0; i < cols; ++i)
+        {
             cout << "   " << (char)('A' + i) << "  ";
         }
         cout << '\n';
         cout << "   ";
-        for (int i = 0; i < cols; ++i) {
+        for (int i = 0; i < cols; ++i)
+        {
             cout << "+-----";
         }
         cout << "+\n";
-        for (int i = 0; i < rows; ++i) {
+        for (int i = 0; i < rows; ++i)
+        {
             std::stringstream ss;
             ss << std::setw(2) << std::setfill('0') << i;
             cout << ss.str() << " ";
 
-            for (int j = 0; j < cols; ++j) {
+            for (int j = 0; j < cols; ++j)
+            {
                 auto entry = data[i][j];
                 string entry_string;
-                if (entry == 0) entry_string = "   ";
-                else entry_string = entry->code;
+                if (entry == 0)
+                    entry_string = "   ";
+                else
+                    entry_string = entry->code;
                 cout << "| " << entry_string << " ";
             }
             cout << "|\n   ";
-            for (int i = 0; i < cols; ++i) {
+            for (int i = 0; i < cols; ++i)
+            {
                 cout << "+-----";
             }
             cout << "+\n";
@@ -68,10 +79,12 @@ class MatrixItem : public Matrix<Item*> {
     }
 };
 
-class StorageOwner {
-    public:
+class StorageOwner
+{
+public:
+    StorageOwner(int rows, int cols);
 
-    StorageOwner(int rows, int cols) : storage(rows, cols) {}
+    StorageOwner(const StorageOwner &other);
 
     StorageOwner(StorageOwner &other);
 

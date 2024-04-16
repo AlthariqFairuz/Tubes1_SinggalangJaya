@@ -27,6 +27,11 @@ $(OBJDIR)/%.o: src/%.cpp
 	@mkdir -p $(@D)  # Create object directory if it doesn't exist
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
+# Run
+run: 
+	$(MAKE) all
+	./$(EXECUTABLE)
+
 # Clean target to remove all object files
 clean:
 	rm -rf $(OBJECTS) $(OBJDIR)

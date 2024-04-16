@@ -9,8 +9,9 @@ void Mayor::set_storage(StorageOwner &so) {
     }
 }
 
-string Mayor::get_username() const {
-    return username;
+string Mayor::get_role() const
+{
+    return "Walikota";
 }
 
 int Mayor::get_gold() const {

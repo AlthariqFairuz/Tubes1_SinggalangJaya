@@ -8,53 +8,63 @@
 #include "Matrix.hpp"
 #include "../../utils/pcolor.hpp"
 
-
 using std::cout, std::endl;
-using std::vector;
 using std::string;
+using std::vector;
 
-class MatrixAnimal : public Matrix<Animal*> {
-    public:
-
-    MatrixAnimal(int rows, int cols) : Matrix<Animal*>(rows, cols) {
-
+class MatrixAnimal : public Matrix<Animal *>
+{
+public:
+    MatrixAnimal(int rows, int cols) : Matrix<Animal *>(rows, cols)
+    {
     }
-    ~MatrixAnimal() {
-
+    ~MatrixAnimal()
+    {
     }
 
-    void print() const {
+    void print() const
+    {
         cout << "   ";
-        for (int i = 0; i < cols; ++i) {
+        for (int i = 0; i < cols; ++i)
+        {
             cout << "   " << (char)('A' + i) << "  ";
         }
         cout << '\n';
         cout << "   ";
-        for (int i = 0; i < cols; ++i) {
+        for (int i = 0; i < cols; ++i)
+        {
             cout << "+-----";
         }
         cout << "+\n";
-        for (int i = 0; i < rows; ++i) {
+        for (int i = 0; i < rows; ++i)
+        {
             std::stringstream ss;
             ss << std::setw(2) << std::setfill('0') << i;
             cout << ss.str() << " ";
 
-            for (int j = 0; j < cols; ++j) {
+            for (int j = 0; j < cols; ++j)
+            {
                 auto entry = data[i][j];
                 string entry_string;
-                if (entry == 0) entry_string = "   ";
-                else entry_string = entry->code;
+                if (entry == 0)
+                    entry_string = "   ";
+                else
+                    entry_string = entry->code;
 
                 cout << "| ";
-                if (entry != 0 && entry->ready_to_harvest()) {
+                if (entry != 0 && entry->ready_to_harvest())
+                {
                     print_green(entry_string);
-                } else {
+                }
+                else
+                {
                     print_red(entry_string);
                 }
                 cout << " ";
             }
             cout << "|\n   ";
-            for (int i = 0; i < cols; ++i) {
+            for (int i = 0; i < cols; ++i)
+            {
                 cout << "+-----";
             }
             cout << "+\n";
@@ -63,9 +73,12 @@ class MatrixAnimal : public Matrix<Animal*> {
     }
 };
 
+class PastureOwner
+{
+public:
+    PastureOwner(int rows, int cols);
 
-class PastureOwner {
-    public:
+    PastureOwner(const PastureOwner &other);
 
     PastureOwner(int rows, int cols) : land(rows, cols) {}
 
@@ -74,6 +87,8 @@ class PastureOwner {
     void operator=(PastureOwner &other);
 
     void set_at(int row, int col, Animal *animal);
+
+    int count_total_animals();
 
     Coordinate query_animal();
 

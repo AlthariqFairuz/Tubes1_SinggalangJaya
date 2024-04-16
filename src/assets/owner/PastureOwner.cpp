@@ -25,8 +25,26 @@ void PastureOwner::set_at(int row, int col, Animal *animal) {
     land.set_at(row, col, animal);
 }
 
-Coordinate PastureOwner::query_animal() {
-    while (true) {
+int PastureOwner::count_total_animals()
+{
+    int count = 0;
+    for (int i = 0; i < land.get_rows(); ++i)
+    {
+        for (int j = 0; j < land.get_cols(); ++j)
+        {
+            if (land(i, j) != 0)
+            {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
+Coordinate PastureOwner::query_animal()
+{
+    while (true)
+    {
         cout << "Pilih slot:" << endl;
         cetak_peternakan();
         cout << "Petak slot: ";
@@ -34,11 +52,13 @@ Coordinate PastureOwner::query_animal() {
         cin >> slot;
 
         Coordinate loc = location(slot);
-        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= land.get_rows() || loc.col < 0 || loc.col >= land.get_cols()) {
+        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= land.get_rows() || loc.col < 0 || loc.col >= land.get_cols())
+        {
             cout << "Koordinat tidak valid" << endl;
-            continue; 
+            continue;
         }
-        if (land.is_empty(loc.row, loc.col)) {
+        if (land.is_empty(loc.row, loc.col))
+        {
             cout << "Slot merupakan slot kosong. Ulangi langi." << endl;
             continue;
         }
@@ -46,8 +66,10 @@ Coordinate PastureOwner::query_animal() {
     }
 }
 
-Coordinate PastureOwner::query_empty_slot() {
-    while (true) {
+Coordinate PastureOwner::query_empty_slot()
+{
+    while (true)
+    {
         cout << "Pilih slot yang kosong" << endl;
         cetak_peternakan();
         cout << "Petak slot: ";
@@ -55,11 +77,13 @@ Coordinate PastureOwner::query_empty_slot() {
         cin >> slot;
 
         Coordinate loc = location(slot);
-        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= land.get_rows() || loc.col < 0 || loc.col >= land.get_cols()) {
+        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= land.get_rows() || loc.col < 0 || loc.col >= land.get_cols())
+        {
             cout << "Koordinat tidak valid" << endl;
-            continue; 
+            continue;
         }
-        if (!land.is_empty(loc.row, loc.col)) {
+        if (!land.is_empty(loc.row, loc.col))
+        {
             cout << "Slot sudah ditempati oleh hewan. Ulangi langi." << endl;
             continue;
         }
@@ -67,8 +91,10 @@ Coordinate PastureOwner::query_empty_slot() {
     }
 }
 
-Coordinate PastureOwner::query_specified_animal(string _code) {
-    while (true) {
+Coordinate PastureOwner::query_specified_animal(string _code)
+{
+    while (true)
+    {
         cout << "Pilih slot:" << endl;
         cetak_peternakan();
 
@@ -77,15 +103,18 @@ Coordinate PastureOwner::query_specified_animal(string _code) {
         cin >> slot;
 
         Coordinate loc = location(slot);
-        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= land.get_rows() || loc.col < 0 || loc.col >= land.get_cols()) {
+        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= land.get_rows() || loc.col < 0 || loc.col >= land.get_cols())
+        {
             cout << "Koordinat tidak valid" << endl;
-            continue; 
+            continue;
         }
-        if (land.is_empty(loc.row, loc.col)) {
+        if (land.is_empty(loc.row, loc.col))
+        {
             cout << "Slot merupakan slot kosong. Ulangi langi." << endl;
             continue;
         }
-        if (land(loc.row, loc.col)->code != _code) {
+        if (land(loc.row, loc.col)->code != _code)
+        {
             cout << "Hewan tidak memiliki kode yang sesuai dengan yang ditentukan sebelumnya" << endl;
             continue;
         }
@@ -93,10 +122,10 @@ Coordinate PastureOwner::query_specified_animal(string _code) {
     }
 }
 
-void PastureOwner::cetak_peternakan() const {
+void PastureOwner::cetak_peternakan() const
+{
     cout << "==========" << endl;
     cout << "Peternakan" << endl;
     cout << "==========" << endl;
     land.print();
 }
-
