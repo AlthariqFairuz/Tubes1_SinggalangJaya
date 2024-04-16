@@ -26,6 +26,7 @@ class Command {
     static void panen_peternak(StorageOwner &so, PastureOwner &po);
     static void beli(Person &p, StorageOwner &so);
     static void jual(Person &p, StorageOwner &so);
+    static void tambah_pemain(Person &m);
 };
 
 #endif

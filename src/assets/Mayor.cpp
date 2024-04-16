@@ -65,3 +65,7 @@ void Mayor::beli() {
 void Mayor::jual() {
     Command::jual(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }
+
+void Mayor::tambah_pemain() {
+    Command::tambah_pemain(*dynamic_cast<Person*>(this));
+}
