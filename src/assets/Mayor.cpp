@@ -22,7 +22,7 @@ void Mayor::cetak_penyimpanan() const {
 }
  
 void Mayor::pungut_pajak(){
-    Command::pungut_pajak(*dynamic_cast<Mayor*>(this), *(Game::players));
+    // Command::pungut_pajak(*dynamic_cast<Mayor*>(this), *(Game::players));
 }
 void Mayor::makan() {
     Command::makan(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
@@ -37,5 +37,5 @@ void Mayor::beli() {
 }
 
 void Mayor::jual() {
-    Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
+    Command::jual(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }

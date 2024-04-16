@@ -81,8 +81,8 @@ void Command::beli(Person &p, StorageOwner &so) {
             shop_item->second.items.pop_back();
             if (!shop_item->second.items.empty()) {
                 selected_item = shop_item->second.items.back();
-                --shop_item->second.stock; 
             }
+            --shop_item->second.stock; 
         }
     }
 

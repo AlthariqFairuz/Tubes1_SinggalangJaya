@@ -17,6 +17,7 @@ using std::vector;
 
 class ShopItem {
     public:
+    ShopItem() {}
     ShopItem(vector<Item*> _items, int _stock) : items(_items), stock(_stock) {} 
 
     vector<Item*> items;
