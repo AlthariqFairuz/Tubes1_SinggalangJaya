@@ -16,11 +16,19 @@
 using std::string;
 using std::vector;
 
-class CropFarmer : public Person, public StorageOwner, public CroplandOwner, public Taxable, public GameLogic
-{
-public:
-    CropFarmer(string username, int gold, int weight);
-    CropFarmer(string username, int gold, int weight, const StorageOwner &so, const CroplandOwner &co);
+class CropFarmer : public Person, public StorageOwner, public CroplandOwner, public Taxable, public GameLogic {
+    public:
+    CropFarmer(string username, int gold, int weight) :
+    Person(username, gold, weight), StorageOwner(Game::storage_row, Game::storage_col), CroplandOwner(Game::cropland_row, Game::cropland_col) {}
+    CropFarmer(string username, int gold, int weight, StorageOwner so, CroplandOwner co) :
+    Person(username, gold, weight), StorageOwner(so), CroplandOwner(co) {}
+    
+    void set_storage(StorageOwner &so);
+    // void set_pasture_land(PastureOwner &po);
+    void set_crop_land(CroplandOwner &co);
+
+    // PersonType get_person_type() override;
+    // string get_username() const;
 
     string get_username() const override;
     int get_gold() const override;
@@ -39,6 +47,7 @@ public:
     void panen() override;
 
     void beli() override;
+    void jual() override;
 };
 
 #endif

@@ -11,8 +11,12 @@ using std::string;
 map<string, AnimalConfig> Animal::animal_config;
 map<string, string> Animal::name_to_code;
 
-string Animal::get_name()
-{
+Animal::Animal(string _code, int _weight) : Item(_code), weight(_weight) {
+
+}
+
+string Animal::get_name() {
+
     return Animal::animal_config.find(code)->second.name;
 }
 
@@ -21,8 +25,8 @@ int Animal::get_price()
     return Animal::animal_config.find(code)->second.price;
 }
 
-int Animal::get_weight()
-{
+
+int Animal::get_weight() {
     return weight;
 }
 

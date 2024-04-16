@@ -8,8 +8,12 @@ FruitPlant::FruitPlant(string _code, int _duration) : Plant(_code, _duration)
 {
 }
 
-ItemType FruitPlant::get_item_type()
-{
+FruitPlant::FruitPlant(string _code, int _duration) : Plant(_code, _duration) {
+
+}
+
+
+ItemType FruitPlant::get_item_type() {
     return ItemType::Plant;
 }
 

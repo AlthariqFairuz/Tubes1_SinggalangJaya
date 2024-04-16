@@ -21,11 +21,11 @@ public:
     static int storage_row, storage_col;
     static int cropland_row, cropland_col;
     static int pasture_row, pasture_col;
-
-    static set<GameLogic *, CompareUsername>::iterator current_player;
-
-private:
-    static set<GameLogic *, CompareUsername> players;
+    
+    static set<GameLogic*, CompareUsername>::iterator current_player;
+    
+    
+    static set<GameLogic*, CompareUsername> players;
 };
 
 #endif

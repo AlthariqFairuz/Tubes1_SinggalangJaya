@@ -80,6 +80,12 @@ public:
 
     PastureOwner(const PastureOwner &other);
 
+    PastureOwner(int rows, int cols) : land(rows, cols) {}
+
+    PastureOwner(PastureOwner &other);
+
+    void operator=(PastureOwner &other);
+
     void set_at(int row, int col, Animal *animal);
 
     int count_total_animals();

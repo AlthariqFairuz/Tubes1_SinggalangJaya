@@ -3,16 +3,24 @@
 
 using std::cout, std::cin, std::endl;
 
-CroplandOwner::CroplandOwner(int rows, int cols) : land(rows, cols)
-{
+CroplandOwner::CroplandOwner(CroplandOwner &other) : CroplandOwner(other.land.get_rows(), other.land.get_cols()) {
+    for (int i = 0; i < land.get_rows(); ++i) {
+        for (int j = 0; j < land.get_cols(); ++j) {
+            land(i, j) = other.land(i, j);
+        }
+    }
 }
 
-CroplandOwner::CroplandOwner(const CroplandOwner &other) : land(other.land)
-{
+void CroplandOwner::operator=(CroplandOwner &other) {
+    cout << "calling croplandowner = operator" << endl;
+    for (int i = 0; i < land.get_rows(); ++i) {
+        for (int j = 0; j < land.get_cols(); ++j) {
+            land(i, j) = other.land(i, j);
+        }
+    }
 }
 
-void CroplandOwner::set_at(int row, int col, Plant *plant)
-{
+void CroplandOwner::set_at(int row, int col, Plant *plant) {
     land.set_at(row, col, plant);
 }
 

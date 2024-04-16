@@ -91,6 +91,10 @@ public:
 
     CroplandOwner(const CroplandOwner &other);
 
+    CroplandOwner(CroplandOwner &other);
+
+    void operator=(CroplandOwner &other);
+
     void set_at(int row, int col, Plant *plant);
 
     int count_total_plants();

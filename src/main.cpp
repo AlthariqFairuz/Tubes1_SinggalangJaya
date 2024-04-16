@@ -17,7 +17,6 @@ int main()
 {
     Game::muat_konfigurasi();
     Game::muat();
-    cout << "Muat konfigurasi berhasil" << endl;
     cout << "Game dimulai dari " << (*Game::current_player)->get_username() << endl;
 
     while (true)

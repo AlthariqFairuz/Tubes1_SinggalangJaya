@@ -26,9 +26,20 @@ public:
     ~MatrixItem()
     {
     }
-
-    void print() const
-    {
+    int get_price_total(){  
+        int total = 0;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(!is_empty(i,j)){
+                auto item=dynamic_cast<Item*>(data[i][j]);
+                
+                total+=item->get_price();
+            }
+            }
+        }
+        return total;
+    }
+    void print() const {
         cout << "   ";
         for (int i = 0; i < cols; ++i)
         {
@@ -75,21 +86,31 @@ public:
 
     StorageOwner(const StorageOwner &other);
 
+    StorageOwner(StorageOwner &other);
+
+    void operator=(StorageOwner &other);
+
     void set_at(int row, int col, Item *item);
 
     void operator+=(Item *item);
+
+    void remove_item(string code, int frequency);
 
     void cetak_penyimpanan() const;
 
     int count_empty_slots();
 
-    int count_total_items();
+    int count_items(string code);
+
+    // int count_total_items();
 
     bool is_exist_specified_item(ItemType item_type);
 
     Coordinate query_empty_slot();
 
     Coordinate query_specific_item(ItemType item_type);
+
+    Coordinate query_any_item();
 
     Coordinate query_consumable();
 
@@ -98,6 +119,8 @@ public:
     bool is_exist_consumable();
 
     bool is_exist_consumable(ProductType product_type);
+
+    
 
     MatrixItem storage;
     // private:

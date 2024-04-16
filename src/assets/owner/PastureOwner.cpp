@@ -3,16 +3,25 @@
 
 using std::cout, std::cin, std::endl;
 
-PastureOwner::PastureOwner(int rows, int cols) : land(rows, cols)
-{
+PastureOwner::PastureOwner(PastureOwner &other) : land(other.land.get_rows(), other.land.get_cols()) {
+    cout << "Calling pastureowner cctor" << endl;
+    for (int i = 0; i < land.get_rows(); ++i) {
+        for (int j = 0; j < land.get_cols(); ++j) {
+            land(i, j) = other.land(i, j);
+        }
+    }
 }
 
-PastureOwner::PastureOwner(const PastureOwner &other) : land(other.land)
-{
+void PastureOwner::operator=(PastureOwner &other) {
+    cout << "Calling pastureowner = operator" << endl;
+    for (int i = 0; i < land.get_rows(); ++i) {
+        for (int j = 0; j < land.get_cols(); ++j) {
+            land(i, j) = other.land(i, j);
+        }
+    }
 }
 
-void PastureOwner::set_at(int row, int col, Animal *animal)
-{
+void PastureOwner::set_at(int row, int col, Animal *animal) {
     land.set_at(row, col, animal);
 }
 

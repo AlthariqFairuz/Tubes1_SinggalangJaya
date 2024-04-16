@@ -26,6 +26,10 @@ void Command::beli(Person &p, StorageOwner &so) {
     int quantity;
     cin >> quantity;
 
+    if (quantity <= 0) {
+        cout << "Anda membeli harapan kosong" << endl;
+        return;
+    }
 
     int available = INT32_MAX;
     Item *selected_item = 0;
@@ -81,8 +85,8 @@ void Command::beli(Person &p, StorageOwner &so) {
             shop_item->second.items.pop_back();
             if (!shop_item->second.items.empty()) {
                 selected_item = shop_item->second.items.back();
-                --shop_item->second.stock; 
             }
+            --shop_item->second.stock; 
         }
     }
 

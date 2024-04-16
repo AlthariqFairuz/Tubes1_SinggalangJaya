@@ -4,9 +4,8 @@
 #include "Person.hpp"
 #include "owner/StorageOwner.hpp"
 #include "../abstracts/GameLogic.hpp"
+#include "../abstracts/Taxable.hpp"
 #include "../Game.hpp"
-
-#include "../commands/commands.hpp"
 
 #include <string>
 
@@ -18,19 +17,30 @@ public:
     Mayor(string username, int gold, int weight);
     Mayor(string username, int gold, int weight, const StorageOwner &so);
 
+    void set_storage(StorageOwner &so);
+    // void set_pasture_land(PastureOwner &po);
+    // void set_crop_land(CroplandOwner &co);
+
+    void pungut_pajak() override;
+
+    // PersonType get_person_type() override;
+    // string get_username() const override;
     string get_username() const override;
     int get_gold() const override;
     int get_weight() const override;
     PersonType get_person_type() override;
     string get_role() const override;
-
+    
     void next() override;
+
+    int calculate_tax() override;
 
     void cetak_penyimpanan() const override;
     void makan() override;
     void bangun() override;
 
     void beli() override;
+    void jual() override;
 };
 
 #endif

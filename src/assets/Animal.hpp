@@ -37,6 +37,7 @@ class AnimalConfig {
 class Animal : public Item {
     public:
     Animal(string _code);
+    Animal(string _code, int _weight);
     int weight;
     
     // Animal(string code, AnimalType animal_type);

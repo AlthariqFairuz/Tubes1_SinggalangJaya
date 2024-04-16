@@ -40,8 +40,11 @@ Plant::Plant(string _code, int _duration) : Item(_code), duration(_duration)
 {
 }
 
-string Plant::get_name()
-{
+Plant::Plant(string _code, int _duration) : Item(_code), duration(_duration) {
+    
+}
+
+string Plant::get_name() {
     return Plant::plant_config.find(code)->second.name;
 }
 
@@ -50,8 +53,7 @@ int Plant::get_price()
     return Plant::plant_config.find(code)->second.price;
 }
 
-int Plant::get_duration()
-{
+int Plant::get_duration() {
     return duration;
 }
 

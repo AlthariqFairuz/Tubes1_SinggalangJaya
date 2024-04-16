@@ -1,43 +1,76 @@
 #include "LivestockFarmer.hpp"
 #include "../commands/commands.hpp"
+#include<cmath>
 
-LivestockFarmer::LivestockFarmer(string username, int gold, int weight) : Person(username, gold, weight), StorageOwner(Game::storage_row, Game::storage_col), PastureOwner(Game::pasture_row, Game::pasture_col) {}
+void LivestockFarmer::set_storage(StorageOwner &so) {
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            storage(i, j) = so.storage(i, j);
+        }
+    }
+}
 
-LivestockFarmer::LivestockFarmer(string username, int gold, int weight, const StorageOwner &so, const PastureOwner &po) : Person(username, gold, weight), StorageOwner(so), PastureOwner(po) {}
+void LivestockFarmer::set_pasture_land(PastureOwner &po) {
+    for (int i = 0; i < land.get_rows(); ++i) {
+        for (int j = 0; j < land.get_cols(); ++j) {
+            land(i, j) = po.land(i, j);
+        }
+    }
+}
 
-string LivestockFarmer::get_username() const
-{
+
+string LivestockFarmer::get_username() const {
     return username;
 }
 
-int LivestockFarmer::get_gold() const
-{
+int LivestockFarmer::get_gold() const {
     return gold;
 }
 
-int LivestockFarmer::get_weight() const
-{
+int LivestockFarmer::get_weight() const {
     return weight;
 }
 
-PersonType LivestockFarmer::get_person_type()
-{
+PersonType LivestockFarmer::get_person_type() {
     return PersonType::Peternak;
 }
 
-string LivestockFarmer::get_role() const
-{
+string LivestockFarmer::get_role() const {
     return "Peternak";
 }
 
-void LivestockFarmer::next()
-{
+
+void LivestockFarmer::next() {
     // Tidak perlu tambah umur tanaman karena tidak ada ladang
 }
 
-int LivestockFarmer::calculate_tax()
-{
-    return 0;
+int LivestockFarmer::calculate_tax() {
+    double kkp = double(storage.get_price_total()- 11);
+
+    double tax  = 0;
+
+    if(kkp<=6){
+        tax = 5/100;
+    }else if(kkp <= 25){
+        tax = 15/100;
+    }else if(kkp<=50){
+        tax = 25/100;
+    }else if(kkp<=500){
+        tax = 30/100;
+    }else{
+        tax = 35/100;
+    }
+
+    int val =0;
+    int pre_tax = round(tax*kkp);
+    if(this->gold<pre_tax){
+        this->gold = 0;
+        val += gold;
+    }else{
+        this->gold-=pre_tax;
+        val += pre_tax;    
+    }
+    return val;
 }
 
 void LivestockFarmer::cetak_penyimpanan() const
@@ -73,4 +106,8 @@ void LivestockFarmer::panen()
 void LivestockFarmer::beli()
 {
     Command::beli(*dynamic_cast<Person *>(this), *dynamic_cast<StorageOwner *>(this));
+}
+
+void LivestockFarmer::jual() {
+    Command::jual(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }

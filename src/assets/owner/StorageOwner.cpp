@@ -4,16 +4,28 @@
 
 using std::cout, std::cin, std::endl;
 
-StorageOwner::StorageOwner(int rows, int cols) : storage(rows, cols)
-{
+StorageOwner::StorageOwner(StorageOwner &other) : StorageOwner(other.storage.get_rows(), other.storage.get_cols()) {
+    cout << "Calling storageowner cctor" << endl;
+
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            storage(i, j) = other.storage(i, j);
+        }
+    }
 }
 
-StorageOwner::StorageOwner(const StorageOwner &other) : storage(other.storage)
-{
+void StorageOwner::operator=(StorageOwner &other) {
+    cout << "Calling storageowner = operator" << endl;
+    
+
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            storage(i, j) = other.storage(i, j);
+        }
+    }
 }
 
-void StorageOwner::cetak_penyimpanan() const
-{
+void StorageOwner::cetak_penyimpanan() const {
     cout << "===========" << endl;
     cout << "Penyimpanan" << endl;
     cout << "===========" << endl;
@@ -30,20 +42,17 @@ void StorageOwner::operator+=(Item *item)
     storage.set(item);
 }
 
-int StorageOwner::count_empty_slots()
-{
-    int count = 0;
-    for (int i = 0; i < storage.get_rows(); ++i)
-    {
-        for (int j = 0; j < storage.get_cols(); ++j)
-        {
-            if (storage(i, j) == 0)
-            {
-                ++count;
+void StorageOwner::remove_item(string code, int frequency) {
+    int total = 0;
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            if (!storage.is_empty(i, j) && storage(i, j)->code == code) {
+                ++frequency;
+                storage.hard_erase(i, j);
             }
+            if (total == frequency) return;
         }
     }
-    return count;
 }
 
 int StorageOwner::count_total_items()
@@ -62,14 +71,22 @@ int StorageOwner::count_total_items()
     return count;
 }
 
-bool StorageOwner::is_exist_specified_item(ItemType item_type)
-{
-    for (int i = 0; i < storage.get_rows(); ++i)
-    {
-        for (int j = 0; j < storage.get_cols(); ++j)
-        {
-            if (!storage.is_empty(i, j) && storage(i, j)->get_item_type() == item_type)
-            {
+// int StorageOwner::count_total_items() {
+//     int total = 0;
+//     for (int i = 0; i < storage.get_rows(); ++i) {
+//         for (int j = 0; j < storage.get_cols(); ++j) {
+//             if (!storage.is_empty(i, j)) {
+//                 ++total;
+//             }
+//         }
+//     }
+//     return total;
+// }
+
+bool StorageOwner::is_exist_specified_item(ItemType item_type) {
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            if (!storage.is_empty(i, j) && storage(i, j)->get_item_type() == item_type) {
                 return true;
             }
         }
@@ -77,10 +94,20 @@ bool StorageOwner::is_exist_specified_item(ItemType item_type)
     return false;
 }
 
-Coordinate StorageOwner::query_empty_slot()
-{
-    while (true)
-    {
+int StorageOwner::count_items(string code) {
+    int count = 0;
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            if (!storage.is_empty(i, j) && storage(i, j)->code == code) {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
+Coordinate StorageOwner::query_empty_slot() {
+    while (true) {
         cout << "Pilih slot yang kosong" << endl;
         cetak_penyimpanan();
         cout << "Petak slot: ";
@@ -132,10 +159,29 @@ Coordinate StorageOwner::query_specific_item(ItemType item_type)
     }
 }
 
-Coordinate StorageOwner::query_consumable()
-{
-    while (true)
-    {
+Coordinate StorageOwner::query_any_item() {
+    while (true) {
+        cout << "Pilih slot:" << endl;
+        cetak_penyimpanan();
+        cout << "Petak slot: ";
+        string slot;
+        cin >> slot;
+
+        Coordinate loc = location(slot);
+        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= storage.get_rows() || loc.col < 0 || loc.col >= storage.get_cols()) {
+            cout << "Koordinat tidak valid" << endl;
+            continue; 
+        }
+        if (storage.is_empty(loc.row, loc.col)) {
+            cout << "Slot merupakan slot kosong. Ulangi langi." << endl;
+            continue;
+        }
+        return loc;
+    }
+}
+
+Coordinate StorageOwner::query_consumable() {
+    while (true) {
         cout << "Pilih slot:" << endl;
         cetak_penyimpanan();
         cout << "Petak slot: ";

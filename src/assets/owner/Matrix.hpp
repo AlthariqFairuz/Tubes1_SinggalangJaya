@@ -55,8 +55,8 @@ public:
         }
         cout.flush();
     }
-
-protected:
+    
+    protected:
     int rows;
     int cols;
     vector<vector<T>> data;
@@ -82,19 +82,15 @@ public:
             }
         }
     }
-    virtual ~Matrix()
-    {
-        for (int i = 0; i < rows; ++i)
-        {
-            for (int j = 0; j < cols; ++j)
-            {
-                if (data[i][j] != 0)
-                {
-                    delete data[i][j];
-                    data[i][j] = 0;
-                }
-            }
-        }
+    virtual ~Matrix() {
+        // for (int i = 0; i < rows; ++i) {
+        //     for (int j = 0; j < cols; ++j) {
+        //         if (data[i][j] != 0) {
+        //             delete data[i][j];
+        //             data[i][j] = 0;
+        //         }
+        //     }
+        // }
     }
     int get_rows()
     {
@@ -140,9 +136,19 @@ public:
         }
         assert(false);
     }
+    int count_total_items() {
+        int count = 0;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (data[i][j] != 0) {
+                    ++count;
+                }
+            }
+        }
+        return count;
+    }
 
-    bool is_empty(int row, int col)
-    {
+    bool is_empty(int row, int col) {
         return data[row][col] == 0;
     }
 
@@ -205,8 +211,8 @@ public:
         }
         cout.flush();
     }
-
-protected:
+    
+    protected:
     int rows;
     int cols;
     vector<vector<T *>> data;
@@ -221,6 +227,24 @@ public:
     Coordinate(const Coordinate &other) : row(other.row), col(other.col) {}
 
     bool operator==(const Coordinate &other);
+
+    string to_string() const
+    {
+        // Alphabet
+        string result;
+        result += (char)('A' + this->col);
+
+        // Numeric (2 digits)
+        if (this->row < 10)
+        {
+            result += "0";
+        }
+        result += std::to_string(this->row);
+
+        // Return
+        return result;
+    }
+};
 
     string to_string() const
     {
