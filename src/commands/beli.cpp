@@ -26,7 +26,7 @@ void Command::beli(Person &p, StorageOwner &so) {
     int quantity;
     cin >> quantity;
 
-    if (quantity == 0) {
+    if (quantity <= 0) {
         cout << "Anda membeli harapan kosong" << endl;
         return;
     }
