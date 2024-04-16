@@ -4,6 +4,27 @@
 
 using std::cout, std::cin, std::endl;
 
+StorageOwner::StorageOwner(StorageOwner &other) : StorageOwner(other.storage.get_rows(), other.storage.get_cols()) {
+    cout << "Calling storageowner cctor" << endl;
+
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            storage(i, j) = other.storage(i, j);
+        }
+    }
+}
+
+void StorageOwner::operator=(StorageOwner &other) {
+    cout << "Calling storageowner = operator" << endl;
+    
+
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            storage(i, j) = other.storage(i, j);
+        }
+    }
+}
+
 void StorageOwner::cetak_penyimpanan() const {
     cout << "===========" << endl;
     cout << "Penyimpanan" << endl;

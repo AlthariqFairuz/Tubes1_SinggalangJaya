@@ -23,6 +23,10 @@ class CropFarmer : public Person, public StorageOwner, public CroplandOwner, pub
     CropFarmer(string username, int gold, int weight, StorageOwner so, CroplandOwner co) :
     Person(username, gold, weight), StorageOwner(so), CroplandOwner(co) {}
     
+    void set_storage(StorageOwner &so);
+    // void set_pasture_land(PastureOwner &po);
+    void set_crop_land(CroplandOwner &co);
+
     PersonType get_person_type() override;
 
     string get_username() const;

@@ -1,6 +1,26 @@
 #include "LivestockFarmer.hpp"
 #include "../commands/commands.hpp"
 #include<cmath>
+
+
+void LivestockFarmer::set_storage(StorageOwner &so) {
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            storage(i, j) = so.storage(i, j);
+        }
+    }
+}
+
+void LivestockFarmer::set_pasture_land(PastureOwner &po) {
+    for (int i = 0; i < land.get_rows(); ++i) {
+        for (int j = 0; j < land.get_cols(); ++j) {
+            land(i, j) = po.land(i, j);
+        }
+    }
+}
+
+
+
 PersonType LivestockFarmer::get_person_type() {
     return PersonType::Peternak;
 }

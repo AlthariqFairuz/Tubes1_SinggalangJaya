@@ -11,6 +11,10 @@ using std::string;
 map<string, AnimalConfig> Animal::animal_config;
 map<string, string> Animal::name_to_code;
 
+Animal::Animal(string _code, int _weight) : Item(_code), weight(_weight) {
+
+}
+
 string Animal::get_name() {
     return Animal::animal_config.find(code)->second.name;
 }

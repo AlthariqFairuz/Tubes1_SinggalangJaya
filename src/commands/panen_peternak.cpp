@@ -19,10 +19,10 @@ void panen_animal_loc(int row, int col, StorageOwner &so, PastureOwner &po) {
 }
 
 
-int hasil_panen_animal_size(string code) {
+int hasil_panen_animal_size(string animal_code) {
     int size = 0;
     for (auto &[code, product] : Product::product_config) {
-        if (product.origin == Animal::animal_config.find(code)->second.name) {
+        if (product.origin == Animal::animal_config.find(animal_code)->second.name) {
             ++size;
         }
     }

@@ -8,6 +8,7 @@ class CarnivoreAnimal : public Animal {
     CarnivoreAnimal(string _code) : Animal(_code)  {
         
     }
+    CarnivoreAnimal(string _code, int _weight) : Animal(_code, _weight) {}
 
     ItemType get_item_type() override;
     AnimalType get_animal_type() override;

@@ -1,6 +1,14 @@
 #include "Mayor.hpp"
 #include "../commands/commands.hpp"
 
+void Mayor::set_storage(StorageOwner &so) {
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            storage(i, j) = so.storage(i, j);
+        }
+    }
+}
+
 PersonType Mayor::get_person_type() {
     return PersonType::Walikota;
 }

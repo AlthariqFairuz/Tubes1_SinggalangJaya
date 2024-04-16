@@ -36,6 +36,7 @@ class Plant : public Item {
     int duration;
 
     Plant(string _code);
+    Plant(string _code, int _duration);
     // Plant(string code, PlantType plant_type);
     // Plant(string code, PlantType plant_type, int duration);
 

@@ -18,10 +18,10 @@ void panen_plant_loc(int row, int col, StorageOwner &so, CroplandOwner &co) {
 }
 
 
-int hasil_panen_plant_size(string code) {
+int hasil_panen_plant_size(string plant_code) {
     int size = 0;
     for (auto &[code, product] : Product::product_config) {
-        if (product.origin == Plant::plant_config.find(code)->second.name) {
+        if (product.origin == Plant::plant_config.find(plant_code)->second.name) {
             ++size;
         }
     }

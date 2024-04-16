@@ -68,7 +68,11 @@ class PastureOwner {
     public:
 
     PastureOwner(int rows, int cols) : land(rows, cols) {}
-    
+
+    PastureOwner(PastureOwner &other);
+
+    void operator=(PastureOwner &other);
+
     void set_at(int row, int col, Animal *animal);
 
     Coordinate query_animal();

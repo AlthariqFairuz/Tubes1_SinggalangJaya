@@ -31,6 +31,10 @@ Plant::Plant(string _code) : Item(_code), duration(0) {
 
 }
 
+Plant::Plant(string _code, int _duration) : Item(_code), duration(_duration) {
+    
+}
+
 string Plant::get_name() {
     return Plant::plant_config.find(code)->second.name;
 }

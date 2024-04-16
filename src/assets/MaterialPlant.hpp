@@ -6,6 +6,7 @@
 class MaterialPlant : public Plant {
     public:
     MaterialPlant(string _code);
+    MaterialPlant(string _code, int age);
 
     ItemType get_item_type() override;
     PlantType get_plant_type() override;

@@ -1,5 +1,23 @@
 #include "CropFarmer.hpp"
-#include<cmath>
+#include <cmath>
+
+
+void CropFarmer::set_storage(StorageOwner &so) {
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            storage(i, j) = so.storage(i, j);
+        }
+    }
+}
+
+void CropFarmer::set_crop_land(CroplandOwner &co) {
+    for (int i = 0; i < land.get_rows(); ++i) {
+        for (int j = 0; j < land.get_cols(); ++j) {
+            land(i, j) = co.land(i, j);
+        }
+    }
+}
+
 PersonType CropFarmer::get_person_type() {
     return PersonType::Petani;
 }

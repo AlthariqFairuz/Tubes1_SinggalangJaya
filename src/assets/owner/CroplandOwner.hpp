@@ -75,6 +75,10 @@ class CroplandOwner {
     public:
     CroplandOwner(int rows, int cols) : land(rows, cols) {}
 
+    CroplandOwner(CroplandOwner &other);
+
+    void operator=(CroplandOwner &other);
+
     void set_at(int row, int col, Plant *plant);
 
     void cetak_ladang() const;

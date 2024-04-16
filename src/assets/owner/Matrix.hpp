@@ -70,14 +70,14 @@ class Matrix<T*> {
         }
     }
     virtual ~Matrix() {
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                if (data[i][j] != 0) {
-                    delete data[i][j];
-                    data[i][j] = 0;
-                }
-            }
-        }
+        // for (int i = 0; i < rows; ++i) {
+        //     for (int j = 0; j < cols; ++j) {
+        //         if (data[i][j] != 0) {
+        //             delete data[i][j];
+        //             data[i][j] = 0;
+        //         }
+        //     }
+        // }
     }
     int get_rows() {
         return rows;

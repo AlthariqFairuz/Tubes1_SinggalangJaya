@@ -73,6 +73,10 @@ class StorageOwner {
 
     StorageOwner(int rows, int cols) : storage(rows, cols) {}
 
+    StorageOwner(StorageOwner &other);
+
+    void operator=(StorageOwner &other);
+
     void set_at(int row, int col, Item *item);
 
     void operator+=(Item *item);
