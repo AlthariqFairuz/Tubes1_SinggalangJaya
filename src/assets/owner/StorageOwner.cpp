@@ -19,6 +19,18 @@ void StorageOwner::operator+=(Item *item) {
     storage.set(item);
 }
 
+void StorageOwner::remove_item(string code, int frequency) {
+    int total = 0;
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            if (!storage.is_empty(i, j) && storage(i, j)->code == code) {
+                ++frequency;
+                storage.hard_erase(i, j);
+            }
+            if (total == frequency) return;
+        }
+    }
+}
 
 
 int StorageOwner::count_empty_slots() {
@@ -42,6 +54,18 @@ bool StorageOwner::is_exist_specified_item(ItemType item_type) {
         }
     }
     return false;
+}
+
+int StorageOwner::count_items(string code) {
+    int count = 0;
+    for (int i = 0; i < storage.get_rows(); ++i) {
+        for (int j = 0; j < storage.get_cols(); ++j) {
+            if (!storage.is_empty(i, j) && storage(i, j)->code == code) {
+                ++count;
+            }
+        }
+    }
+    return count;
 }
 
 Coordinate StorageOwner::query_empty_slot() {
@@ -84,6 +108,27 @@ Coordinate StorageOwner::query_specific_item(ItemType item_type) {
         }
         if (storage(loc.row, loc.col)->get_item_type() != item_type) {
             cout << "Item tidak berjenis " << Item::get_item_type_string(item_type) << ". Ulangi lagi." << endl;
+            continue;
+        }
+        return loc;
+    }
+}
+
+Coordinate StorageOwner::query_any_item() {
+    while (true) {
+        cout << "Pilih slot:" << endl;
+        cetak_penyimpanan();
+        cout << "Petak slot: ";
+        string slot;
+        cin >> slot;
+
+        Coordinate loc = location(slot);
+        if (loc == Coordinate(-1, -1) || loc.row < 0 || loc.row >= storage.get_rows() || loc.col < 0 || loc.col >= storage.get_cols()) {
+            cout << "Koordinat tidak valid" << endl;
+            continue; 
+        }
+        if (storage.is_empty(loc.row, loc.col)) {
+            cout << "Slot merupakan slot kosong. Ulangi langi." << endl;
             continue;
         }
         return loc;

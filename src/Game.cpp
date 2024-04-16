@@ -64,8 +64,11 @@ void Game::muat_konfigurasi() {
 
         plant_file >> id >> code >> name >> type >> duration_to_harvest >> price;
         PlantConfig plant(id, code, name, type, duration_to_harvest, price);
-        Plant::plant_config[code] = plant;
-        Plant::name_to_code[name] = code;
+        
+        // Plant::plant_config[code] = plant;
+        Plant::plant_config.emplace(code, plant);
+        // Plant::name_to_code[name] = code;
+        Plant::name_to_code.emplace(name, code);
     }
     plant_file.close();
 
@@ -81,8 +84,11 @@ void Game::muat_konfigurasi() {
 
         animal_file >> id >> code >> name >> type >> weight_to_harvest >> price;
         AnimalConfig animal(id, code, name, type, weight_to_harvest, price);
-        Animal::animal_config[code] = animal;
-        Animal::name_to_code[name] = code;
+        
+        // Animal::animal_config[code] = animal;
+        Animal::animal_config.emplace(code, animal);
+        // Animal::name_to_code[name] = code;
+        Animal::name_to_code.emplace(name, code);
     }
     animal_file.close();
 
@@ -99,8 +105,11 @@ void Game::muat_konfigurasi() {
 
         product_file >> id >> code >> name >> type >> origin >> weight_to_harvest >> price;
         ProductConfig product(id, code, name, type, origin, weight_to_harvest, price);
-        Product::product_config[code] = product;
-        Product::name_to_code[name] = code;
+        
+        // Product::product_config[code] = product;
+        Product::product_config.emplace(code, product);
+        // Product::name_to_code[name] = code;
+        Product::name_to_code.emplace(name, code);
     }
     product_file.close();
 
@@ -115,10 +124,14 @@ void Game::muat_konfigurasi() {
         string plant_name;
         int quantity;
         while (ss >> plant_name >> quantity) {
-            r.materials[Plant::name_to_code[plant_name]] = quantity;
+            // r.materials[Plant::name_to_code[plant_name]] = quantity;
+            r.materials.emplace(Product::name_to_code[plant_name], quantity);
         }
-        Recipe::recipe_config[r.code] = r;
-        Recipe::name_to_code[r.name] = r.code;
+        
+        // Recipe::recipe_config[r.code] = r;
+        Recipe::recipe_config.emplace(r.code, r);
+        // Recipe::name_to_code[r.name] = r.code;
+        Recipe::name_to_code.emplace(r.name, r.code);
     }
     recipe_file.close();
     
@@ -145,7 +158,7 @@ void Game::muat() {
         cout << "State tidak dimuat. Game dimulai dari awal menggunakan state default sesuai spesifikasi." << endl;
         CropFarmer* petani= new CropFarmer("Petani1", 50, 40);
         LivestockFarmer* peternak = new LivestockFarmer("Peternak1", 50, 40);
-        Mayor* walikota = new Mayor("Walikota", 50, 40);
+        Mayor* walikota = new Mayor("Walikota", 150, 40);
 
         players.insert(petani);
         players.insert(peternak);

@@ -77,15 +77,21 @@ class StorageOwner {
 
     void operator+=(Item *item);
 
+    void remove_item(string code, int frequency);
+
     void cetak_penyimpanan() const;
 
     int count_empty_slots();
+
+    int count_items(string code);
 
     bool is_exist_specified_item(ItemType item_type);
 
     Coordinate query_empty_slot();
 
     Coordinate query_specific_item(ItemType item_type);
+
+    Coordinate query_any_item();
 
     Coordinate query_consumable();
 

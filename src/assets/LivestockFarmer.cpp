@@ -72,3 +72,6 @@ void LivestockFarmer::beli() {
     Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }
 
+void LivestockFarmer::jual() {
+    Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
+}

@@ -26,9 +26,13 @@ void Mayor::makan() {
 }
 
 void Mayor::bangun() {
-    Command::bangun(*dynamic_cast<StorageOwner*>(this));
+    Command::bangun(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }
 
 void Mayor::beli() {
+    Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
+}
+
+void Mayor::jual() {
     Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }

@@ -19,12 +19,13 @@ class Command {
     static void cetak_peternakan(const PastureOwner &po);
     static void tanam(StorageOwner &so, CroplandOwner &co);
     static void ternak(StorageOwner &so, PastureOwner &po);
-    static void bangun(StorageOwner &so);
+    static void bangun(Person &p, StorageOwner &so);
     static void makan(Person &p, StorageOwner &so);
     static void kasih_makan(StorageOwner &so, PastureOwner &po);
     static void panen_petani(StorageOwner &so, CroplandOwner &co);
     static void panen_peternak(StorageOwner &so, PastureOwner &po);
     static void beli(Person &p, StorageOwner &so);
+    static void jual(Person &p, StorageOwner &so);
 };
 
 #endif

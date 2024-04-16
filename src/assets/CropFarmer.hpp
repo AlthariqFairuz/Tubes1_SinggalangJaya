@@ -37,6 +37,7 @@ class CropFarmer : public Person, public StorageOwner, public CroplandOwner, pub
     void panen() override;
 
     void beli() override;
+    void jual() override;
 };
 
 

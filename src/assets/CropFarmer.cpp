@@ -64,3 +64,7 @@ void CropFarmer::panen() {
 void CropFarmer::beli() {
     Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
 }
+
+void CropFarmer::jual() {
+    Command::beli(*dynamic_cast<Person*>(this), *dynamic_cast<StorageOwner*>(this));
+}

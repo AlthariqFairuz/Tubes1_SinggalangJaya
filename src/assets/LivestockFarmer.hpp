@@ -36,6 +36,7 @@ class LivestockFarmer : public Person, public StorageOwner, public PastureOwner,
     void panen() override;
 
     void beli() override;
+    void jual() override;
 };
 
 
